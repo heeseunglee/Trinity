@@ -15,6 +15,12 @@ class DatabaseSeeder extends Seeder {
 		Model::unguard();
 
 		// $this->call('UserTableSeeder');
+
+        $this->call('LvlTestMcPoolBeginnerTableSeeder');
+        $this->call('LvlTestMcPoolElementaryTableSeeder');
+        $this->call('LvlTestMcPoolIntermediateTableSeeder');
+        $this->call('LvlTestMcPoolExpertTableSeeder');
+        $this->call('ConsultantsTableSeeder');
 	}
 
 }

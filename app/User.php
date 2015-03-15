@@ -22,7 +22,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name', 'email', 'password'];
+	protected $fillable = ['email',
+        'password',
+        'userable_id',
+        'userable_type',
+        'name_kor',
+        'name_eng',
+        'private_email',
+        'phone_number',
+        'profile_image',
+        'is_first_login'];
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -31,4 +40,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+    public function userable() {
+        return $this->morphTo();
+    }
 }

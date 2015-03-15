@@ -30,7 +30,7 @@ return [
 	|
 	| Here you may list service providers which define a "compiles" function
 	| that returns additional files that should be compiled, providing an
-	| easy way to get common files from any packages you are utilizing.
+	| easy way to get Common files from any packages you are utilizing.
 	|
 	*/
 

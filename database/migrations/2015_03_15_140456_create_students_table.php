@@ -17,7 +17,7 @@ class CreateStudentsTable extends Migration {
             $table->increments('id');
 
             // foreign key to companies.id
-            // student must be an employee of some company
+            // Student must be an employee of some company
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies')
                 ->onDelete('cascade')->onUpdate('cascade');

@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration {
             /**
              * 로그인 이메일 주소
              */
-            $table->string('account_email')->unique();
+            $table->string('email')->unique();
 
             /**
              * 암호
