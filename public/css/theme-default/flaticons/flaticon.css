@@ -1,0 +1,55 @@
+@font-face {
+	font-family: "Flaticon";
+	src: url("flaticon.eot");
+	src: url("flaticon.eot#iefix") format("embedded-opentype"),
+	url("flaticon.woff") format("woff"),
+	url("flaticon.ttf") format("truetype"),
+	url("flaticon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+	font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+/*margin-left: 20px;*/
+}.flaticon-add199:before {
+	content: "\e000";
+}
+.flaticon-amount:before {
+	content: "\e001";
+}
+.flaticon-chart23:before {
+	content: "\e002";
+}
+.flaticon-check59:before {
+	content: "\e003";
+}
+.flaticon-crowd:before {
+	content: "\e004";
+}
+.flaticon-diploma11:before {
+	content: "\e005";
+}
+.flaticon-handshake1:before {
+	content: "\e006";
+}
+.flaticon-help24:before {
+	content: "\e007";
+}
+.flaticon-magnifier10:before {
+	content: "\e008";
+}
+.flaticon-minus17:before {
+	content: "\e009";
+}
+.flaticon-plus24:before {
+	content: "\e00a";
+}
+.flaticon-presentation15:before {
+	content: "\e00b";
+}
+.flaticon-add70:before {
+	content: "\e00c";
+}
