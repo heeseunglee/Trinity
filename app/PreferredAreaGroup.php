@@ -2,25 +2,27 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Hr extends Model {
+class PreferredAreaGroup extends Model {
 
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'hrs';
+    protected $table = 'preferred_area_groups';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['company_id',
-        'consultant_id'];
+    protected $fillable = ['name'];
 
-    public function user() {
-        return $this->morphOne('App\User', 'userable');
-    }
+    /**
+     * The timestamps
+     *
+     * @var boolean
+     */
+    public $timestamps = false;
 
 }

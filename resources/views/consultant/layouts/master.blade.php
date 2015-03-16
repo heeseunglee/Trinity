@@ -38,15 +38,17 @@
         </div>
 
         <!-- BEGIN JAVASCRIPT -->
-        <script type="text/javascript" src="{{ asset('/js/libs/utils/html5shiv.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('/js/libs/jquery/jquery-migrate-1.2.1.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('/js/core/BootstrapFixed.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('/js/libs/bootstrap/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('/js/libs/jquery/jquery-1.11.0.min.js') }}"></script>
+        <script src="{{ asset('/js/libs/jquery/jquery-migrate-1.2.1.min.js') }}"></script>
+        <script src="{{ asset('/js/core/BootstrapFixed.js') }}"></script>
+        <script src="{{ asset('/js/libs/bootstrap/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('/js/libs/spin.js/spin.min.js') }}"></script>
+        <script src="{{ asset('/js/libs/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
         <!-- Additional JS includes -->
         @yield('additional_js_includes')
 
         <!-- Always put App.js last in your javascript imports -->
-        <script type="text/javascript" src="{{ asset('/js/core/App.js') }}"></script>
+        <script src="{{ asset('/js/core/App.js') }}"></script>
     </body>
 </html>

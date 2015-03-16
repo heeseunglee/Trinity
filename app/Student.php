@@ -21,7 +21,11 @@ class Student extends Model {
         'deputy'];
 
     public function user() {
-        return $this->morphOne('User', 'userable');
+        return $this->morphOne('App\User', 'userable');
+    }
+
+    public function company() {
+        return $this->belongsTo('App\Company', 'company_id');
     }
 
 }

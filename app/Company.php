@@ -26,4 +26,16 @@ class Company extends Model {
         'contact_number_2',
         'logo_image'];
 
+    public function courses() {
+        return $this->hasMany('App\Course', 'company_id');
+    }
+
+    public function hrs() {
+        return $this->hasMany('App\Hr', 'company_id');
+    }
+
+    public function students() {
+        return $this->hasMany('App\Student', 'company_id');
+    }
+
 }

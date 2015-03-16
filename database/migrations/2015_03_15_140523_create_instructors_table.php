@@ -45,6 +45,15 @@ class CreateInstructorsTable extends Migration {
              */
             $table->string('bank_account_number', 1024);
 
+            $table->time('available_morning_from');
+            $table->time('available_morning_to');
+
+            $table->time('available_afternoon_from');
+            $table->time('available_afternoon_to');
+
+            $table->time('available_night_from');
+            $table->time('available_night_to');
+
             /**
              * 월급 지급일
              * 특별한 일이 없다면 25일로 셋팅

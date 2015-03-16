@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIntstructorVisaTypesTable extends Migration {
+class CreatePreferredAreaGroupsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,10 @@ class CreateIntstructorVisaTypesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('instructor_visa_types', function(Blueprint $table)
+		Schema::create('preferred_area_groups', function(Blueprint $table)
 		{
 			$table->increments('id');
-
             $table->string('name');
-
-            $table->string('visa_type');
 		});
 	}
 
@@ -29,7 +26,7 @@ class CreateIntstructorVisaTypesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('instructor_visa_types');
+		Schema::drop('preferred_area_groups');
 	}
 
 }

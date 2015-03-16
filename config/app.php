@@ -138,6 +138,8 @@ return [
         'Laracasts\Flash\FlashServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'Collective\Html\HtmlServiceProvider',
+        'Intervention\Image\ImageServiceProvider',
+        'Cviebrock\ImageValidator\ImageValidatorServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -198,6 +200,7 @@ return [
         'Flash'     => 'Laracasts\Flash\Flash',
         'Form'      => 'Collective\Html\FormFacade',
         'Html'      => 'Collective\Html\HtmlFacade',
+        'Image'     => 'Intervention\Image\Facades\Image',
 
 	],
 

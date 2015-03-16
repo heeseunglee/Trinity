@@ -21,6 +21,10 @@ class DatabaseSeeder extends Seeder {
         $this->call('LvlTestMcPoolIntermediateTableSeeder');
         $this->call('LvlTestMcPoolExpertTableSeeder');
         $this->call('ConsultantsTableSeeder');
+        $this->call('InstructorVisaTypesTableSeeder');
+        $this->call('PreferredAreaGroupsTableSeeder');
+        $this->call('PreferredAreasTableSeeder');
+        $this->call('CertificatesTableSeeder');
 	}
 
 }
