@@ -11,11 +11,33 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
-
-Route::get('home', 'HomeController@index');
-
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::get('/', 'IndexController@index');
+
+Route::group(['prefix' => 'Consultant'], function() {
+    Route::get('/', 'Consultant\CoursesManagementController@index');
+
+    Route::get('index', 'Consultant\CoursesManagementController@index');
+
+    Route::group(['prefix' => 'coursesManagement'], function() {
+        Route::get('/', 'Consultant\CoursesManagementController@index');
+
+        Route::get('index', 'Consultant\CoursesManagementController@index');
+    });
+});
+
+Route::group(['prefix' => 'Student'], function() {
+
+});
+
+Route::group(['prefix' => 'Hr'], function() {
+
+});
+
+Route::group(['prefix' => 'Instructor'], function() {
+
+});
