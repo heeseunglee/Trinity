@@ -1,5 +1,8 @@
 <?php
 
+use App\Bank;
+use Illuminate\Database\Seeder;
+
 class BanksTableSeeder extends Seeder
 {
 	public function run()

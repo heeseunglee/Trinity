@@ -2,22 +2,21 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class CourseMainCurriculum extends Model {
+class AcademicBackground extends Model {
 
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'course_main_curriculums';
+    protected $table = 'academic_backgrounds';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name',
-        'can_select_multiple'];
+    protected $fillable = ['name'];
 
     /**
      * The timestamps
@@ -26,7 +25,4 @@ class CourseMainCurriculum extends Model {
      */
     public $timestamps = false;
 
-    public function courseSubCurriculums() {
-        return $this->hasMany('App\CourseSubCurriculum', 'course_main_curriculum_id');
-    }
 }

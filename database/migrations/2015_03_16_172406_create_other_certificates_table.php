@@ -18,7 +18,7 @@ class CreateOtherCertificatesTable extends Migration {
 
             $table->string('name');
 
-            $table->string('comment')->nullable();
+            $table->string('detail')->nullable();
 		});
 	}
 

@@ -137,10 +137,57 @@
                             </div><!--end .col-lg-3 -->
                             <!-- END HEADER XS BOX -->
                         </div>
+
+                        <div class="row">
+                            <!-- START HEADER XS BOX -->
+                            <div class="col-lg-12">
+                                <div class="box">
+                                    <div class="box-head box-head-xs style-primary">
+                                        <header><h5 class="text-light"> <strong>운전면허증</strong></h5></header>
+                                    </div>
+                                    <div class="box-body">
+                                        {!! Form::open(['class' => 'form-horizontal']) !!}
+                                            @foreach(App\Certificate::where('name', '운전면허증')->get() as $driver)
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="driver" value="{{ $driver->name }}">
+                                                                {{ $driver->name }}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        {!! Form::close() !!}
+                                    </div>
+                                </div>
+                            </div><!--end .col-lg-3 -->
+                            <!-- END HEADER XS BOX -->
+                        </div>
+
+                        <div class="row">
+                            <!-- START BASIC BUTTONS -->
+                            <div class="col-lg-12">
+                                <div class="box style-transparent">
+                                    <div class="box-body text-center">
+                                        <p class="text-right">
+                                            <button type="button" class="btn btn-primary">자격증 등록하기</button>
+                                        </p>
+                                    </div><!--end .box-body -->
+                                </div><!--end .box -->
+                            </div><!--end .col-lg-12 -->
+                            <!-- END BASIC BUTTONS -->
+                        </div>
                     </div>
                 </section>
             </div>
         </div>
+        <input name="hsk_result" type="hidden"/>
+        <input name="tsc_result" type="hidden"/>
+        <input name="opic_result" type="hidden"/>
+        <input name="bct_result" type="hidden"/>
+        <input name="driver_result" type="hidden"/>
 
         <!-- BEGIN JAVASCRIPT -->
         <script src="{{ asset('/js/libs/jquery/jquery-1.11.0.min.js') }}"></script>
@@ -149,10 +196,67 @@
         <script src="{{ asset('/js/libs/bootstrap/bootstrap.min.js') }}"></script>
         <script src="{{ asset('/js/libs/spin.js/spin.min.js') }}"></script>
         <script src="{{ asset('/js/libs/slimscroll/jquery.slimscroll.min.js') }}"></script>
-
-        <!-- Additional JS includes -->
-
         <!-- Always put App.js last in your javascript imports -->
         <script src="{{ asset('/js/core/App.js') }}"></script>
+        <script>
+            (function(namespace, $) {
+                "use strict";
+
+                var Certificate = function() {
+                    // Create reference to this instance
+                    var o = this;
+                    // Initialize app when document is ready
+                    $(document).ready(function() {
+                        $(".radio-inline").click(function(e) {
+                            $("input[name=hsk]").change(function(e) {
+                                $("input[name=hsk_result]").val($(this).val());
+                            });
+                            $("input[name=tsc]").change(function(e) {
+                                $("input[name=tsc_result]").val($(this).val());
+                            });
+                            $("input[name=opic]").change(function(e) {
+                                $("input[name=opic_result]").val($(this).val());
+                            });
+                            $("input[name=bct]").change(function(e) {
+                                $("input[name=bct_result]").val($(this).val());
+                            });
+                            $("input[name=driver]").change(function(e) {
+                                $("input[name=driver_result]").val($(this).val());
+                            });
+                        });
+                        $(":button").click(function() {
+                            var result = "";
+                            if(!$("input[name=hsk_result]").val() == "") {
+                                result = result + $("input[name=hsk_result]").val() + ", ";
+                            }
+                            if(!$("input[name=tsc_result]").val() == "") {
+                                result = result + $("input[name=tsc_result]").val() + ", ";
+                            }
+                            if(!$("input[name=opic_result]").val() == "") {
+                                result = result + $("input[name=opic_result]").val() + ", ";
+                            }
+                            if(!$("input[name=bct_result]").val() == "") {
+                                result = result + $("input[name=bct_result]").val() + ", ";
+                            }
+                            if(!$("input[name=driver_result]").val() == "") {
+                                result = result + $("input[name=driver_result]").val() + ", ";
+                            }
+
+                            var n = result.lastIndexOf(", ");
+                            if (n > 0) {
+                                result = result.substring(0, n);
+                            }
+                            window.opener.$("#certificate").val(result);
+                            window.close();
+                        });
+
+                    });
+
+                };
+
+                // =========================================================================
+                namespace.Certificate = new Certificate;
+            }(this.boostbox, jQuery)); // pass in (namespace, jQuery):
+        </script>
     </body>
 </html>

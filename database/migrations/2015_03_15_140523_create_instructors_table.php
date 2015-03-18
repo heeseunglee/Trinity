@@ -64,8 +64,13 @@ class CreateInstructorsTable extends Migration {
 
             $table->tinyInteger('age');
 
-            $table->unsignedInteger('instructor_visa_type_id');
+            $table->unsignedInteger('instructor_visa_type_id')->nullable();
             $table->foreign('instructor_visa_type_id')->references('id')->on('instructor_visa_types');
+
+            $table->unsignedInteger('academic_background_id')->nullable();
+            $table->foreign('academic_background_id')->references('id')->on('academic_backgrounds');
+
+            $table->string('academic_background_detail')->nullable();
 
             $table->timestamps();
 		});

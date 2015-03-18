@@ -25,6 +25,11 @@ class DatabaseSeeder extends Seeder {
         $this->call('PreferredAreaGroupsTableSeeder');
         $this->call('PreferredAreasTableSeeder');
         $this->call('CertificatesTableSeeder');
+        $this->call('AcademicBackgroundsTableSeeder');
+        $this->call('CourseTypesTableSeeder');
+        $this->call('CourseMainCurriculumsTableSeeder');
+        $this->call('CourseSubCurriculumsTableSeeder');
+        $this->call('BanksTableSeeder');
 	}
 
 }

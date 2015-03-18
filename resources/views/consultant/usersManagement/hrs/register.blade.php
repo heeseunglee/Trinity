@@ -47,12 +47,29 @@
                 $('.box-head .tools .btn-close').on('click', function(e) {
                     o._handleBoxClose(e);
                 });
-                $('.btn-student-add').on('click', function(e) {
-                    o._handleStudentAdd(e);
+                $('.btn-hr-add').on('click', function(e) {
+                    o._handleHrAdd(e);
                 });
-                $('.btn-student-remove').on('click', function(e){
-                    o._handleStudentRemove(e);
+                $('.btn-hr-remove').on('click', function(e){
+                    o._handleHrRemove(e);
                 });
+                $('#certificate').on('click', function(e) {
+                    window.open('register/popups/certificate',
+                            'popup',
+                            'width=800px, height=600px, left=0, top=0, resizeable=false');
+                });
+                $("input[name=other_certificate_name_1], input[name=other_certificate_detail_1]," +
+                "input[name=other_certificate_name_2], input[name=other_certificate_detail_2]," +
+                "input[name=other_certificate_name_3], input[name=other_certificate_detail_3]").on('click', function(e) {
+                    window.open('register/popups/otherCertificate',
+                            'popup',
+                            'width=800px, height=600px, left=0, top=0, resizeable=false');
+                })
+                $("#curriculum").on('click', function(e) {
+                    window.open('register/popups/curriculum',
+                            'popup',
+                            'width=800px, height=600px, left=0, top=0, resizeable=false');
+                })
             };
 
             // =========================================================================
@@ -78,21 +95,21 @@
                 boostbox.App.removeBox(box);
             };
 
-            p._handleStudentAdd = function(e) {
-                var number_of_students = Number($("input[name='number_of_students']").val());
-                number_of_students++;
-                $("input[name='number_of_students").val(number_of_students);
-                var row = "<div class='form-group'><div class='col-lg-3 col-md-2 col-sm-3'><label for='name_kor_"+number_of_students+"' class='control-label'>학생 이름 "+number_of_students+"</label></div><div class='col-lg-9 col-md-10 col-sm-9'><input type='text' name='name_kor_"+number_of_students+"' id='name_kor_"+number_of_students+"' class='form-control' placeholder='학생 이름 "+number_of_students+"' data-rule-minlength='2' required=''></div></div><div class='form-group'><div class='col-lg-3 col-md-2 col-sm-3'><label for='email_"+number_of_students+"' class='control-label'>학생 이메일 "+number_of_students+"</label></div><div class='col-lg-9 col-md-10 col-sm-9'><input type='email' name='email_"+number_of_students+"' id='email_"+number_of_students+"' class='form-control' placeholder='학생 이메일 "+number_of_students+"' required=''></div></div>";
+            p._handleHrAdd = function(e) {
+                var number_of_hrs = Number($("input[name='number_of_hrs']").val());
+                number_of_hrs++;
+                $("input[name='number_of_hrs").val(number_of_hrs);
+                var row = "<div class='form-group'><div class='col-lg-3 col-md-2 col-sm-3'><label for='name_kor_"+number_of_hrs+"' class='control-label'>인사담당자 이름 "+number_of_hrs+"</label></div><div class='col-lg-9 col-md-10 col-sm-9'><input type='text' name='name_kor_"+number_of_hrs+"' id='name_kor_"+number_of_hrs+"' class='form-control' placeholder='인사담당자 이름 "+number_of_hrs+"' data-rule-minlength='2' required=''></div></div><div class='form-group'><div class='col-lg-3 col-md-2 col-sm-3'><label for='email_"+number_of_hrs+"' class='control-label'>인사담당자 이메일 "+number_of_hrs+"</label></div><div class='col-lg-9 col-md-10 col-sm-9'><input type='email' name='email_"+number_of_hrs+"' id='email_"+number_of_hrs+"' class='form-control' placeholder='인사담당자 이메일 "+number_of_hrs+"' required=''></div></div>";
                 $("#last_line").before(row);
             };
 
-            p._handleStudentRemove = function(e) {
-                var number_of_students = Number($("input[name='number_of_students']").val());
-                if(number_of_students == 1) {
+            p._handleHrRemove = function(e) {
+                var number_of_hrs = Number($("input[name='number_of_hrs']").val());
+                if(number_of_hrs == 1) {
                     return false;
                 }
-                number_of_students--;
-                $("input[name='number_of_students").val(number_of_students);
+                number_of_hrs--;
+                $("input[name='number_of_hrs").val(number_of_hrs);
                 $(".form-group").last().remove();
                 $(".form-group").last().remove();
             };
@@ -122,10 +139,10 @@
         <ol class="breadcrumb">
             <li><a href="{{ URL::to('index') }}">메인 페이지</a></li>
             <li><a href="{{ URL::to('Consultant/usersManagement/index') }}">사용자 관리</a></li>
-            <li class="active">학생 관리</li>
+            <li class="active">인사담당자 관리</li>
         </ol>
         <div class="section-header">
-            <h3 class="text-standard"><i class="fa fa-fw fa-arrow-circle-right text-gray-light"></i> 학생 등록</h3>
+            <h3 class="text-standard"><i class="fa fa-fw fa-arrow-circle-right text-gray-light"></i> 인사담당자 등록</h3>
         </div>
         <div class="section-body">
             @include('flash::message')
@@ -144,11 +161,11 @@
                 <div class="col-lg-12">
                     <div class="box">
                         <div class="box-head box-head-xs style-primary">
-                            <header><h5 class="text-light"> <strong>학생</strong> 등록</h5></header>
+                            <header><h5 class="text-light"> <strong>인사담당자</strong> 등록</h5></header>
                             <div class="tools" style="float: none;">
                                 <div class="btn-group btn-group-transparent">
-                                    <a class="btn btn-equal btn-sm btn-student-add"><i class="fa fa-plus-square style-support3"></i></a>
-                                    <a class="btn btn-equal btn-sm btn-student-remove"><i class="fa fa-minus-square style-support5"></i></a>
+                                    <a class="btn btn-equal btn-sm btn-hr-add"><i class="fa fa-plus-square style-support3"></i></a>
+                                    <a class="btn btn-equal btn-sm btn-hr-remove"><i class="fa fa-minus-square style-support5"></i></a>
                                 </div>
                             </div>
                             <div class="tools">
@@ -159,10 +176,10 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            {!! Form::open(['url' => 'Consultant/usersManagement/students/create',
+                            {!! Form::open(['url' => 'Consultant/usersManagement/hrs/create',
                                             'class' => 'form-horizontal form-validate']) !!}
 
-                                <input name="number_of_students" type="hidden" value="1"/>
+                                <input name="number_of_hrs" type="hidden" value="1"/>
 
                                 <div class="form-group">
                                     <div class="col-lg-3 col-md-2 col-sm-3">
@@ -180,19 +197,19 @@
 
                                 <div class="form-group">
                                     <div class="col-lg-3 col-md-2 col-sm-3">
-                                        <label for="name_kor_1" class="control-label">학생 이름</label>
+                                        <label class="control-label" for="name_kor_1">인사담당자 이름</label>
                                     </div>
                                     <div class="col-lg-9 col-md-10 col-sm-9">
-                                        <input type="text" name="name_kor_1" id="name_kor_1" class="form-control" placeholder="학생 이름" data-rule-minlength="2" required="">
+                                        <input class="form-control" type="text" name="name_kor_1" placeholder="인사담당자 이름" required/>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-lg-3 col-md-2 col-sm-3">
-                                        <label for="email_1" class="control-label">학생 이메일</label>
+                                        <label class="control-label" for="email_1">인사담당자 이메일</label>
                                     </div>
                                     <div class="col-lg-9 col-md-10 col-sm-9">
-                                        <input type="email" name="email_1" id="email_1" class="form-control" placeholder="학생 이메일" required="">
+                                        <input class="form-control" type="email" name="email_1" placeholder="인사담당자 이메일" required/>
                                     </div>
                                 </div>
 

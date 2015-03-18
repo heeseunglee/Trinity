@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\CreateStudentsRequest;
 use App\Student;
+use App\User;
 use Illuminate\Http\Request;
 
 class UsersManagementStudentsController extends Controller {
@@ -30,11 +31,10 @@ class UsersManagementStudentsController extends Controller {
                 $result_array[$user->userable_id] = false;
             }
             else {
-                $new_student = null;
-                \DB::transaction(function() use ($company_id, $request, $i, $result_array) {
-                    $new_student = Student::create([
-                        'company_id' => $company_id
-                    ]);
+                $new_student = new Student();
+                \DB::transaction(function() use ($company_id, $request, $i, $result_array, $new_student) {
+                    $new_student->company_id = $company_id;
+                    $new_student->save();
                     $new_student->user()->create([
                         'email' => $request->input('email_'.$i),
                         'name_kor' => $request->input('name_kor_'.$i),

@@ -18,7 +18,7 @@ Route::controllers([
 
 Route::get('/', 'IndexController@index');
 
-Route::group(['prefix' => 'Consultant'], function() {
+Route::group(['prefix' => 'Consultant', 'middleware' => 'auth'], function() {
     Route::get('/', function() {
         return redirect('Consultant/coursesManagement/index');
     });
@@ -72,6 +72,8 @@ Route::group(['prefix' => 'Consultant'], function() {
             Route::get('register/popups/certificate', 'Consultant\UsersManagementInstructorsController@certificatePopUp');
 
             Route::get('register/popups/otherCertificate', 'Consultant\UsersManagementInstructorsController@otherCertificatePopUp');
+
+            Route::get('register/popups/curriculum', 'Consultant\UsersManagementInstructorsController@curriculumPopUp');
 
             Route::post('create', 'Consultant\UsersManagementInstructorsController@create');
 

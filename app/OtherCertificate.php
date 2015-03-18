@@ -17,7 +17,7 @@ class OtherCertificate extends Model {
      * @var array
      */
     protected $fillable = ['name',
-        'comment'];
+        'detail'];
 
     /**
      * The timestamps

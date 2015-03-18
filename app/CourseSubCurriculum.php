@@ -26,4 +26,7 @@ class CourseSubCurriculum extends Model {
      */
     public $timestamps = false;
 
+    public function courseMainCurriculum() {
+        return $this->belongsTo('CourseMainCurriculum', 'course_main_curriculum_id');
+    }
 }

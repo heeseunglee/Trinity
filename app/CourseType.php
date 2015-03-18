@@ -16,7 +16,7 @@ class CourseType extends Model {
      *
      * @var array
      */
-    protected $fillable = ['course_type'];
+    protected $fillable = ['name'];
 
     /**
      * The timestamps

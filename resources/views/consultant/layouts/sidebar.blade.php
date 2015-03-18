@@ -87,8 +87,10 @@
                     <ul>
                         <li><a href="{{ URL::to('Consultant/usersManagement/consultants/index') }}"
                             @if(strpos($current_url, 'usersManagement/consultants/index')) class = "active" @endif>컨설턴트 전체보기</a></li>
-                        <li><a href="{{ URL::to('Consultant/usersManagement/consultants/register') }}"
-                            @if(strpos($current_url, 'usersManagement/consultants/register')) class = "active" @endif>컨설턴트 등록</a></li>
+                        @if(\Auth::user()->userable->is_admin)
+                            <li><a href="{{ URL::to('Consultant/usersManagement/consultants/register') }}"
+                                @if(strpos($current_url, 'usersManagement/consultants/register')) class = "active" @endif>컨설턴트 등록</a></li>
+                        @endif
                     </ul>
                     <!--end /submenu -->
                 </li>
