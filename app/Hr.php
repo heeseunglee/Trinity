@@ -23,4 +23,12 @@ class Hr extends Model {
         return $this->morphOne('App\User', 'userable');
     }
 
+    public function consultant() {
+        return $this->belongsTo('App\Consultant', 'consultant_id');
+    }
+
+    public function company() {
+        return $this->belongsTo('App\Company', 'company_id');
+    }
+
 }

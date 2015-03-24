@@ -53,23 +53,6 @@
                 $('.btn-instructor-remove').on('click', function(e){
                     o._handleInstructorRemove(e);
                 });
-                $('#certificate').on('click', function(e) {
-                    window.open('register/popups/certificate',
-                            'popup',
-                            'width=800px, height=600px, left=0, top=0, resizeable=false');
-                });
-                $("input[name=other_certificate_name_1], input[name=other_certificate_detail_1]," +
-                "input[name=other_certificate_name_2], input[name=other_certificate_detail_2]," +
-                "input[name=other_certificate_name_3], input[name=other_certificate_detail_3]").on('click', function(e) {
-                    window.open('register/popups/otherCertificate',
-                            'popup',
-                            'width=800px, height=600px, left=0, top=0, resizeable=false');
-                })
-                $("#curriculum").on('click', function(e) {
-                    window.open('register/popups/curriculum',
-                            'popup',
-                            'width=800px, height=600px, left=0, top=0, resizeable=false');
-                })
             };
 
             // =========================================================================

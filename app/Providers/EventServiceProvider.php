@@ -32,24 +32,23 @@ class EventServiceProvider extends ServiceProvider {
         // and send a mail to the user
         // but for the initial settings, some consultants will be ignored
         User::created(function($user) {
-            if($user->userable_type == 'App\Consultant' && !$user->userable->is_admin)
-                return false;
+            if($user->userable_type != 'App\Consultant' or !$user->userable->is_admin) {
+                $pw = $this->generate_password();
 
-            $pw = $this->generate_password();
+                // Password is stored in `$pw`
+                \DB::transaction(function() use ($pw, $user) {
+                    $user->password = \Hash::make($pw);
+                    $user->save();
+                });
 
-            // Password is stored in `$pw`
-            \DB::transaction(function() use ($pw, $user) {
-                $user->password = \Hash::make($pw);
-                $user->save();
-            });
-
-            \Mail::queue('emails.userCreated', ['user' => $user, 'password' => $pw], function($message) use ($user) {
-                $message->to($user->email, $user->name_kor);
-            });
+                \Mail::queue('emails.userCreated', ['user' => $user, 'password' => $pw], function($message) use ($user) {
+                    $message->to($user->email, $user->name_kor);
+                });
+            }
         });
 	}
 
-    private function generate_password($length = 10, $complex = 4) {
+    private function generate_password($length = 10, $complex = 3) {
         $min = 'abcdefghijklmnopqrstuvwxyz';
         $num = '0123456789';
         $maj = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

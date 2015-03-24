@@ -44,6 +44,12 @@ class Authenticate {
 			}
 		}
 
+        $current_user = \Auth::user();
+        $uri_prefix = str_replace('App\\', '', $current_user->userable_type);
+        if($current_user->is_first_login) {
+            return view(strtolower($uri_prefix).'.firstLogin');
+        }
+
 		return $next($request);
 	}
 

@@ -16,7 +16,8 @@ class OtherCertificate extends Model {
      *
      * @var array
      */
-    protected $fillable = ['name',
+    protected $fillable = ['instructor_id',
+        'name',
         'detail'];
 
     /**
@@ -27,9 +28,6 @@ class OtherCertificate extends Model {
     public $timestamps = false;
 
     public function instructors() {
-        return $this->belongsToMany('App\Instructor',
-                                    'instructors_other_certificates',
-                                    'other_certificate_id',
-                                    'instructor_id');
+        return $this->belongsTo('App\Instructor', 'instructor_id');
     }
 }

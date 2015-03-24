@@ -207,51 +207,17 @@
                     var o = this;
                     // Initialize app when document is ready
                     $(document).ready(function() {
-                        $(".radio-inline").click(function(e) {
-                            $("input[name=hsk]").change(function(e) {
-                                $("input[name=hsk_result]").val($(this).val());
-                            });
-                            $("input[name=tsc]").change(function(e) {
-                                $("input[name=tsc_result]").val($(this).val());
-                            });
-                            $("input[name=opic]").change(function(e) {
-                                $("input[name=opic_result]").val($(this).val());
-                            });
-                            $("input[name=bct]").change(function(e) {
-                                $("input[name=bct_result]").val($(this).val());
-                            });
-                            $("input[name=driver]").change(function(e) {
-                                $("input[name=driver_result]").val($(this).val());
-                            });
-                        });
                         $(":button").click(function() {
                             var result = "";
-                            if(!$("input[name=hsk_result]").val() == "") {
-                                result = result + $("input[name=hsk_result]").val() + ", ";
-                            }
-                            if(!$("input[name=tsc_result]").val() == "") {
-                                result = result + $("input[name=tsc_result]").val() + ", ";
-                            }
-                            if(!$("input[name=opic_result]").val() == "") {
-                                result = result + $("input[name=opic_result]").val() + ", ";
-                            }
-                            if(!$("input[name=bct_result]").val() == "") {
-                                result = result + $("input[name=bct_result]").val() + ", ";
-                            }
-                            if(!$("input[name=driver_result]").val() == "") {
-                                result = result + $("input[name=driver_result]").val() + ", ";
-                            }
-
+                            $(":radio:checked").each(function() {
+                                result += $(this).val() + ", ";
+                            })
                             var n = result.lastIndexOf(", ");
-                            if (n > 0) {
-                                result = result.substring(0, n);
-                            }
+                            result = result.substring(0, n);
                             window.opener.$("#certificate").val(result);
                             window.close();
                         });
-
                     });
-
                 };
 
                 // =========================================================================

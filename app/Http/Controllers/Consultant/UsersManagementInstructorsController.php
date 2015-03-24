@@ -21,19 +21,6 @@ class UsersManagementInstructorsController extends Controller {
         return view('consultant.usersManagement.instructors.register');
     }
 
-    public function certificatePopUp() {
-        return view('consultant.usersManagement.instructors.popups.certificate');
-    }
-
-    public function otherCertificatePopUp() {
-        return view('consultant.usersManagement.instructors.popups.otherCertificate');
-    }
-
-    public function curriculumPopUp() {
-        return view('consultant.usersManagement.instructors.popups.curriculum')
-            ->with('course_main_curriculums', CourseMainCurriculum::all());
-    }
-
     public function create(CreateInstructorsRequest $request) {
         $number_of_instructors = $request->input('number_of_instructors');
         $result_array = array();

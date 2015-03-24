@@ -25,4 +25,8 @@ class PreferredAreaGroup extends Model {
      */
     public $timestamps = false;
 
+    public function preferredAreas() {
+        return $this->hasMany('App\PreferredArea', 'preferred_area_group_id');
+    }
+
 }

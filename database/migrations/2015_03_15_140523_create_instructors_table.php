@@ -72,6 +72,10 @@ class CreateInstructorsTable extends Migration {
 
             $table->string('academic_background_detail')->nullable();
 
+            $table->string('major');
+
+            $table->tinyInteger('years_of_stay_in_china');
+
             $table->timestamps();
 		});
 	}

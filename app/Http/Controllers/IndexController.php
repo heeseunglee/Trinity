@@ -18,7 +18,7 @@ class IndexController extends Controller {
     public function index() {
         $current_user = Auth::user();
         $url_token = explode('\\', $current_user->userable_type);
-        return Redirect::to($url_token[1].'/coursesManagement/index');
+        return redirect($url_token[1].'/coursesManagement/index');
     }
 
 }

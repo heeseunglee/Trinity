@@ -47,9 +47,24 @@ class Instructor extends Model {
     }
 
     public function otherCertificates() {
-        return $this->belongsToMany('App\OtherCertificate',
-                                    'instructors_other_certificates',
+        return $this->hasMany('App\OtherCertificate', 'instructor_id');
+    }
+
+    public function curriculums() {
+        return $this->belongsToMany('App\CourseSubCurriculum',
+                                    'instructors_curriculums',
                                     'instructor_id',
-                                    'other_certificate_id');
+                                    'course_sub_curriculum_id');
+    }
+
+    public function preferredAreas() {
+        return $this->belongsToMany('App\PreferredArea',
+                                    'instructors_preferred_areas',
+                                    'instructor_id',
+                                    'preferred_area_id');
+    }
+
+    public function careerDetails() {
+        return $this->hasMany('App\CareerDetail', 'instructor_id');
     }
 }
