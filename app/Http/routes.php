@@ -11,8 +11,11 @@
 |
 */
 
+use App\Course;
 use App\CourseMainCurriculum;
+use App\LvlTest;
 use App\PreferredAreaGroup;
+use App\Student;
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
@@ -73,6 +76,58 @@ Route::group(['prefix' => 'Consultant', 'middleware' => 'auth'], function() {
 
             Route::get('index', 'Consultant\CoursesManagementRequestedCoursesController@index');
 
+            Route::get('approve/{new_course_request_id}', 'Consultant\CoursesManagementRequestedCoursesController@approve');
+
+            Route::get('modify/{new_course_request_id}', 'Consultant\CoursesManagementRequestedCoursesController@modify');
+
+            Route::post('modify/{new_course_request_id}', 'Consultant\CoursesManagementRequestedCoursesController@update');
+
+            Route::get('reject/{new_course_request_id}', 'Consultant\CoursesManagementRequestedCoursesController@reject');
+
+            Route::get('popups/curriculum', function() {
+                return view('consultant.coursesManagement.requestedCourses.popups.curriculum')
+                    ->with('course_main_curriculums', CourseMainCurriculum::all());
+            });
+
+            Route::get('ajax/subCurriculum/{course_main_curriculum_id}', function($course_main_curriculum_id) {
+
+                if(\Request::ajax()) {
+                    return view('consultant.coursesManagement.requestedCourses.ajax.subCurriculum')
+                        ->with('course_main_curriculum', CourseMainCurriculum::find($course_main_curriculum_id));
+                }
+
+                return \Response::error('404');
+
+            });
+
+        });
+
+        Route::group(['prefix' => 'preCourses'], function() {
+
+            Route::get('/', function() {
+                return redirect('Consultant/coursesManagement/preCourses/index');
+            });
+
+            Route::get('index', 'Consultant\CoursesManagementPreCoursesController@index');
+
+            Route::get('show/{pre_course_id}', function($pre_course_id) {
+                return view('consultant.coursesManagement.preCourses.show')
+                    ->with('pre_course', Course::find($pre_course_id));
+            });
+
+            Route::get('signUpStudents/{pre_course_id}', function($pre_course_id) {
+                return view('consultant.coursesManagement.preCourses.signUpStudents')
+                    ->with('pre_course', Course::find($pre_course_id));
+            });
+
+            Route::post('signUpStudents/{pre_course_id}', 'Consultant\CoursesManagementPreCoursesController@signUpStudents');
+
+            Route::get('removeStudents/{pre_course_id}', function($pre_course_id) {
+                return view('consultant.coursesManagement.preCourses.removeStudents')
+                    ->with('pre_course', Course::find($pre_course_id));
+            });
+
+            Route::post('removeStudents/{pre_course_id}', 'Consultant\CoursesManagementPreCoursesController@removeStudents');
         });
 
     });
@@ -180,6 +235,52 @@ Route::group(['prefix' => 'Student', 'middleware' => 'auth'], function() {
 
     });
 
+    Route::group(['prefix' => 'testsManagement'], function() {
+
+        Route::get('/', function() {
+            return redirect('Student/testsManagement/index');
+        });
+
+        Route::get('index', function() {
+            $current_user = \Auth::user();
+            $current_student = Student::find($current_user->userable_id);
+            return view('student.testsManagement.index')
+                ->with('waiting_tests', $current_student->lvlTests()->where('status', 'w')->get())
+                ->with('in_progress_tests', $current_student->lvlTests()->where('status', 'p')->get())
+                ->with('completed_tests', $current_student->lvlTests()->where('status', 'c')->get());
+        });
+
+        Route::get('participate/{encrypted_test_id?}', function($encrypted_test_id = null) {
+            $current_user = \Auth::user();
+            $current_student = Student::find($current_user->userable_id);
+            if(is_null($encrypted_test_id)) {
+                return view('student.testsManagement.waitingTests')
+                    ->with('waiting_tests', $current_student->lvlTests()->where('status', 'r')->get());
+            }
+
+            $lvl_test = LvlTest::find(\Crypt::decrypt($encrypted_test_id));
+
+            if(is_null($lvl_test)) {
+                \Flash::error('해당 테스트를 찾을 수 없습니다.');
+                return redirect()->back();
+            }
+
+            return view('student.testsManagement.confirmStart')
+                ->with('encrypted_test_id', $encrypted_test_id);
+        });
+
+        Route::post('participate/{encrypted_test_id}', 'Student\TestsManagementController@participate');
+
+        Route::get('takeTest/{encrypted_test_id}', 'Student\TestsManagementController@takeTest');
+
+        Route::post('takeTest/ajax/updateMcAnswer', 'Student\TestsManagementController@updateMcAnswer');
+
+        Route::post('takeTest/ajax/pauseMcTest', 'Student\TestsManagementController@pauseMcTest');
+
+        Route::post('takeTest/ajax/submitMcTest', 'Student\TestsManagementController@submitMcTest');
+
+    });
+
 });
 
 Route::group(['prefix' => 'Hr', 'middleware' => 'auth'], function() {
@@ -214,12 +315,14 @@ Route::group(['prefix' => 'Hr', 'middleware' => 'auth'], function() {
 
             Route::get('popups/curriculum', function() {
                 return view('hr.coursesManagement.newCourses.popups.curriculum')
-                    ->with('course_main_curriculums', CourseMainCurriculum::all());;
+                    ->with('course_main_curriculums', CourseMainCurriculum::all());
             });
 
             Route::get('ajax/subCurriculum/{course_main_curriculum_id}', function($course_main_curriculum_id) {
-                return view('hr.coursesManagement.newCourses.ajax.subCurriculum')
-                    ->with('course_main_curriculum', CourseMainCurriculum::find($course_main_curriculum_id));
+                if(\Request::ajax()) {
+                    return view('hr.coursesManagement.newCourses.ajax.subCurriculum')
+                        ->with('course_main_curriculum', CourseMainCurriculum::find($course_main_curriculum_id));
+                }
             });
 
         });

@@ -43,4 +43,12 @@ class CourseSubCurriculum extends Model {
                                     'course_sub_curriculum_id',
                                     'new_course_request_id');
     }
+
+    public function courses() {
+        return $this->belongsToMany('App\Course',
+                                    'courses_curriculums',
+                                    'course_sub_curriculum_id',
+                                    'course_id');
+    }
+
 }

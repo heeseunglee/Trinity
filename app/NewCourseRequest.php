@@ -30,8 +30,8 @@ class NewCourseRequest extends Model {
         'location',
         'other_requests',
         'is_lvl_test',
-        'is_confirmed',
-        'confirmed_by'];
+        'status',
+        'approved_by'];
 
     public function curriculums() {
         return $this->belongsToMany('App\CourseSubCurriculum',
@@ -42,6 +42,14 @@ class NewCourseRequest extends Model {
 
     public function courseType() {
         return $this->belongsTo('App\CourseType', 'course_type_id');
+    }
+
+    public function company() {
+        return $this->belongsTo('App\Company', 'company_id');
+    }
+
+    public function hr() {
+        return $this->belongsTo('App\Hr', 'hr_id');
     }
 
 }

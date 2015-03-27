@@ -48,10 +48,18 @@ class CreateNewCourseRequestsTable extends Migration {
 
             $table->text('other_requests')->nullable();
 
-            $table->boolean('is_confirmed')->default(false);
+            /**
+             * 생성된 클래스의 상태를 나타내는 필드로
+             *
+             * pre course : pa (pending approval),
+             *              ca (completed approval),
+             *              ra (rejected approval),
+             *
+             */
+            $table->enum('status', ['pa', 'ca', 'ra']);
 
-            $table->unsignedInteger('confirmed_by')->nullable();
-            $table->foreign('confirmed_by')->references('id')->on('consultants');
+            $table->unsignedInteger('approved_by')->nullable();
+            $table->foreign('approved_by')->references('id')->on('consultants');
 
 			$table->timestamps();
 		});

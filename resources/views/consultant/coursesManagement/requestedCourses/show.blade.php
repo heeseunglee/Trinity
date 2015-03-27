@@ -1,19 +1,14 @@
 @extends('consultant.layouts.master')
 
 @section('additional_css_includes')
-    <link type="text/css" rel="stylesheet" href="{{ asset('/css/theme-default/libs/DataTables/jquery.dataTables.css?'.strtotime('now')) }}" />
-    <link type="text/css" rel="stylesheet" href="{{ asset('/css/theme-default/libs/DataTables/TableTools.css?'.strtotime('now')) }}" />
 @stop
 
 @section('additional_js_includes')
-    <script src="{{ asset('/js/libs/DataTables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('/js/libs/DataTables/extras/ColVis/js/ColVis.min.js') }}"></script>
-    <script src="{{ asset('/js/libs/DataTables/extras/TableTools/media/js/TableTools.min.js') }}"></script>
     <script>
         (function(namespace, $) {
             "use strict";
 
-            var Index = function() {
+            var Show = function() {
                 // Create reference to this instance
                 var o = this;
                 // Initialize app when document is ready
@@ -22,8 +17,7 @@
                 });
 
             };
-
-            var p = Index.prototype;
+            var p = Show.prototype;
 
             // =========================================================================
             // INIT
@@ -32,7 +26,7 @@
             p.initialize = function() {
             };
 
-            namespace.Index = new Index;
+            namespace.Show = new Show;
         }(this.boostbox, jQuery)); // pass in (namespace, jQuery):
     </script>
 @stop
@@ -72,12 +66,12 @@
                                     <tr>
                                         <th>상태</th>
                                         <th>희망과정</th>
-                                        <th>고객사</th>
-                                        <th>신청 담당자</th>
-                                        <th>희망 상담일</th>
+                                        <th>수강생 수</th>
+                                        <th>클래스 형태</th>
                                         <th>희망 시작</th>
                                         <th>희망 종료</th>
-                                        <th style="width:90px">작업</th>
+                                        <th>희망 상담일</th>
+                                        <th>희망 수강일</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -85,9 +79,9 @@
                                     <tr>
                                         <td>
                                             @if($new_course_request->status == 'ca')
-                                                <span class="label label-success">승인 완료</span>
+                                                <span class="label label-gray">승인 완료</span>
                                             @elseif($new_course_request->status == 'pa')
-                                                <span class="label label-info">승인 중</span>
+                                                <span class="label label-success">승인 중</span>
                                             @else
                                                 <span class="label label-danger">승인 반려</span>
                                             @endif
@@ -100,13 +94,10 @@
                                             </a>
                                         </td>
                                         <td>
-                                            {{ $new_course_request->company->name }}
+                                            {{ $new_course_request->estimated_size }}명
                                         </td>
                                         <td>
-                                            {{ $new_course_request->hr->user->name_kor }}
-                                        </td>
-                                        <td>
-                                            {{ substr($new_course_request->meeting_datetime, 0, -3) }}
+                                            {{ $new_course_request->courseType->name }}
                                         </td>
                                         <td>
                                             {{ substr($new_course_request->start_datetime, 0, -3) }}
@@ -114,31 +105,19 @@
                                         <td>
                                             {{ substr($new_course_request->end_datetime, 0, -3) }}
                                         </td>
-
                                         <td>
-                                            <a href="{{ URL::to('Consultant/coursesManagement/requestedCourses/approve/'.$new_course_request->id) }}"
-                                                    class="btn btn-xs btn-success btn-equal"
-                                                    data-toggle="tooltip"
-                                                    data-placement="top"
-                                                    data-original-title="승인">
-                                                <i class="fa fa-check"></i>
-                                            </a>
-
-                                            <a href="{{ URL::to('Consultant/coursesManagement/requestedCourses/modify/'.$new_course_request->id) }}"
-                                                    class="btn btn-xs btn-inverse btn-equal"
-                                                    data-toggle="tooltip"
-                                                    data-placement="top"
-                                                    data-original-title="수정">
-                                                <i class="fa fa-pencil"></i>
-                                            </a>
-
-                                            <a href="{{ URL::to('Consultant/coursesManagement/requestedCourses/reject/'.$new_course_request->id) }}"
-                                                    class="btn btn-xs btn-danger btn-equal"
-                                                    data-toggle="tooltip"
-                                                    data-placement="top"
-                                                    data-original-title="반려">
-                                                <i class="fa fa-trash-o"></i>
-                                            </a>
+                                            {{ substr($new_course_request->meeting_datetime, 0, -3) }}
+                                        </td>
+                                        <td>
+                                            <?php
+                                            $days_array = ['일', '월', '화', '수', '목', '금', '토'];
+                                            $running_days_array = explode(', ', $new_course_request->running_days);
+                                            $running_days_result_array = array();
+                                            foreach($running_days_array as $running_day) {
+                                                $running_days_result_array[] = $days_array[$running_day % 7];
+                                            }
+                                            ?>
+                                            {{ implode(', ', $running_days_result_array) }}
                                         </td>
                                     </tr>
                                 @endforeach

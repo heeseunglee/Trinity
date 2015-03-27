@@ -9,7 +9,7 @@ class LvlTestMc extends Model {
      *
      * @var string
      */
-    protected $table = 'banks';
+    protected $table = 'lvl_test_mcs';
 
     /**
      * The attributes that are mass assignable.

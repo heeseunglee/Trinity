@@ -26,10 +26,12 @@ class CreateLvlTestMcsTable extends Migration {
 
             /**
              * 대기, 진행, 일시정지, 완료
+             *
+             * (r)eady, in (p)rogress, (pa)used, (c)ompleted
              */
-            $table->string('status')->default('대기');
+            $table->enum('status', ['r', 'p', 'pa', 'c'])->default('r');
 
-            $table->tinyInteger('proceed_step');
+            $table->tinyInteger('proceed_step')->default(0);
 
             $table->unsignedInteger('question_1');
             $table->foreign('question_1')->references('id')->on('lvl_test_mc_pool_beginner');

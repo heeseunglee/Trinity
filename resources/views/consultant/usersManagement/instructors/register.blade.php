@@ -79,20 +79,20 @@
             };
 
             p._handleInstructorAdd = function(e) {
-                var number_of_instructors = Number($("input[name='number_of_instructors']").val());
+                var number_of_instructors = Number($("input[name=number_of_instructors]").val());
                 number_of_instructors++;
-                $("input[name='number_of_instructors").val(number_of_instructors);
+                $("input[name=number_of_instructors]").val(number_of_instructors);
                 var row = "<div class='form-group'><div class='col-lg-3 col-md-2 col-sm-3'><label for='name_kor_"+number_of_instructors+"' class='control-label'>교수진 이름 "+number_of_instructors+"</label></div><div class='col-lg-9 col-md-10 col-sm-9'><input type='text' name='name_kor_"+number_of_instructors+"' id='name_kor_"+number_of_instructors+"' class='form-control' placeholder='교수진 이름 "+number_of_instructors+"' data-rule-minlength='2' required=''></div></div><div class='form-group'><div class='col-lg-3 col-md-2 col-sm-3'><label for='email_"+number_of_instructors+"' class='control-label'>교수진 이메일 "+number_of_instructors+"</label></div><div class='col-lg-9 col-md-10 col-sm-9'><input type='email' name='email_"+number_of_instructors+"' id='email_"+number_of_instructors+"' class='form-control' placeholder='교수진 이메일 "+number_of_instructors+"' required=''></div></div>";
                 $("#last_line").before(row);
             };
 
             p._handleInstructorRemove = function(e) {
-                var number_of_instructors = Number($("input[name='number_of_instructors']").val());
+                var number_of_instructors = Number($("input[name=number_of_instructors]").val());
                 if(number_of_instructors == 1) {
                     return false;
                 }
                 number_of_instructors--;
-                $("input[name='number_of_instructors").val(number_of_instructors);
+                $("input[name=number_of_instructors]").val(number_of_instructors);
                 $(".form-group").last().remove();
                 $(".form-group").last().remove();
             };

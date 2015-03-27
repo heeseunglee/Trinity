@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder {
         $this->call('CourseMainCurriculumsTableSeeder');
         $this->call('CourseSubCurriculumsTableSeeder');
         $this->call('BanksTableSeeder');
+        $this->call('TestTypesTableSeeder');
+
 	}
 
 }

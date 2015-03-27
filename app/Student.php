@@ -28,4 +28,16 @@ class Student extends Model {
         return $this->belongsTo('App\Company', 'company_id');
     }
 
+    public function courses() {
+        return $this->belongsToMany('App\Course',
+                                    'courses_students',
+                                    'student_id',
+                                    'course_id')
+            ->withPivot('lvl_test_id');
+    }
+
+    public function lvlTests() {
+        return $this->hasMany('App\LvlTest', 'student_id');
+    }
+
 }

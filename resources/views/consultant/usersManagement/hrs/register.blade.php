@@ -96,20 +96,20 @@
             };
 
             p._handleHrAdd = function(e) {
-                var number_of_hrs = Number($("input[name='number_of_hrs']").val());
+                var number_of_hrs = Number($("input[name=number_of_hrs]").val());
                 number_of_hrs++;
-                $("input[name='number_of_hrs").val(number_of_hrs);
+                $("input[name=number_of_hrs]").val(number_of_hrs);
                 var row = "<div class='form-group'><div class='col-lg-3 col-md-2 col-sm-3'><label for='name_kor_"+number_of_hrs+"' class='control-label'>인사담당자 이름 "+number_of_hrs+"</label></div><div class='col-lg-9 col-md-10 col-sm-9'><input type='text' name='name_kor_"+number_of_hrs+"' id='name_kor_"+number_of_hrs+"' class='form-control' placeholder='인사담당자 이름 "+number_of_hrs+"' data-rule-minlength='2' required=''></div></div><div class='form-group'><div class='col-lg-3 col-md-2 col-sm-3'><label for='email_"+number_of_hrs+"' class='control-label'>인사담당자 이메일 "+number_of_hrs+"</label></div><div class='col-lg-9 col-md-10 col-sm-9'><input type='email' name='email_"+number_of_hrs+"' id='email_"+number_of_hrs+"' class='form-control' placeholder='인사담당자 이메일 "+number_of_hrs+"' required=''></div></div>";
                 $("#last_line").before(row);
             };
 
             p._handleHrRemove = function(e) {
-                var number_of_hrs = Number($("input[name='number_of_hrs']").val());
+                var number_of_hrs = Number($("input[name=number_of_hrs]").val());
                 if(number_of_hrs == 1) {
                     return false;
                 }
                 number_of_hrs--;
-                $("input[name='number_of_hrs").val(number_of_hrs);
+                $("input[name=number_of_hrs]").val(number_of_hrs);
                 $(".form-group").last().remove();
                 $(".form-group").last().remove();
             };

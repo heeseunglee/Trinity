@@ -47,11 +47,11 @@
                                 <tbody>
                                     <?php $count = 1; ?>
                                     @foreach($result_array as $key => $result)
-                                        <?php $instructor = \App\Instructor::find($key); ?>
+                                        <?php $hr = \App\Hr::find($key); ?>
                                         <tr @if($result) class="success" @else class="danger" @endif>
                                             <td>{{ $count }}</td>
-                                            <td>{{ $instructor->user->name_kor }}</td>
-                                            <td>{{ $instructor->user->email }}</td>
+                                            <td>{{ $hr->user->name_kor }}</td>
+                                            <td>{{ $hr->user->email }}</td>
                                         </tr>
                                         <?php $count++; ?>
                                     @endforeach

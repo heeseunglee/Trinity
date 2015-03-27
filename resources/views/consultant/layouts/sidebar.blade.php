@@ -23,33 +23,29 @@
                 <li><a href="{{ URL::to('Consultant/coursesManagement/index') }}"
                     @if(strpos($current_url, 'coursesManagement/index')) class = "active" @endif>전체 보기</a></li>
 
-                <li><a href="{{ URL::to('Consultant/coursesManagement/preCourses') }}"
-                    @if(strpos($current_url, 'coursesManagement/preCourses')) class = "active" @endif>Pre 클래스 관리</a></li>
-
-                <li @if(strpos($current_url, 'requestedCourses')) class = "active expanded" @endif>
+                <li @if(strpos($current_url, 'preCourses')) class = "active expanded" @endif>
                     <a href="javascript:void(0);">
-                        <span class="expand-sign">+</span> <span class="title">클래스 개설요청 관리</span>
+                        <span class="expand-sign">+</span> <span class="title">Pre 클래스 관리</span>
+                    </a>
+                    <!--start submenu -->
+                    <ul>
+                        <li><a href="{{ URL::to('Consultant/coursesManagement/preCourses/index') }}"
+                            @if(strpos($current_url, 'coursesManagement/preCourses/index')) class = "active" @endif>Pre 클래스 전체보기</a></li>
+                        <li><a href="{{ URL::to('Consultant/coursesManagement/preCourses/register') }}"
+                            @if(strpos($current_url, 'coursesManagement/preCourses/register')) class = "active" @endif>Pre 클래스 등록</a></li>
+                    </ul>
+                    <!--end /submenu -->
+                </li>
+
+                <li><a href="{{ URL::to('Consultant/coursesManagement/requestedCourses/index') }}"
+                    @if(strpos($current_url, 'coursesManagement/requestedCourses/index')) class = "active" @endif>클래스 개설요청 관리
                         <?php
-                            $not_confirmed_new_course_requests = \App\NewCourseRequest::where('is_confirmed', false)->get();
+                            $not_confirmed_new_course_requests = \App\NewCourseRequest::where('status', 'pa')->get();
                         ?>
                         @if($not_confirmed_new_course_requests->count() > 0)
                             <span class="badge">{{ $not_confirmed_new_course_requests->count() }}</span>
                         @endif
                     </a>
-                    <!--start submenu -->
-                    <ul>
-                        <li><a href="{{ URL::to('Consultant/coursesManagement/requestedCourses/index') }}"
-                            @if(strpos($current_url, 'coursesManagement/requestedCourses/index')) class = "active" @endif>클래스 개설요청 전체보기</a></li>
-                        <li>
-                            <a href="{{ URL::to('Consultant/coursesManagement/requestedCourses/approve') }}"
-                                @if(strpos($current_url, 'coursesManagement/requestedCourses/approve')) class = "active" @endif>클래스 개설요청 승인
-                                @if($not_confirmed_new_course_requests->count() > 0)
-                                    <span class="badge">{{ $not_confirmed_new_course_requests->count() }}</span>
-                                @endif
-                            </a>
-                        </li>
-                    </ul>
-                    <!--end /submenu -->
                 </li>
             </ul>
         </li>

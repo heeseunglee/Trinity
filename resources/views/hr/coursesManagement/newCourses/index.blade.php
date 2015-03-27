@@ -61,7 +61,7 @@
                             <header><h5 class="text-light">신규 클래스 전체보기</h5></header>
                         </div>
                         <div class="box-body">
-                            <table class="table table-hover">
+                            <table class="table table-hover table-vertical-align-middle">
                                 <thead>
                                     <tr>
                                         <th>상태</th>
@@ -78,21 +78,19 @@
                                     @foreach($new_course_requests as $new_course_request)
                                         <tr>
                                             <td style="vertical-align: middle;">
-                                                @if($new_course_request->is_confirmed)
-                                                    <span class="label label-danger">완료</span>
+                                                @if($new_course_request->status == 'ca')
+                                                    <span class="label label-success">승인 완료</span>
+                                                @elseif($new_course_request->status == 'pa')
+                                                    <span class="label label-info">승인 중</span>
                                                 @else
-                                                    <span class="label label-success">승인중</span>
+                                                    <span class="label label-danger">승인 반려</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                <?php
-                                                    $curriculums_array = array();
-                                                    foreach($new_course_request->curriculums()->get() as $curriculum) {
-                                                        $curriculums_array[] = $curriculum->name;
-                                                    }
-                                                ?>
-                                                <a href="#">
-                                                    {{ implode(', ', $curriculums_array) }}
+                                                <a href="{{ URL::to('Hr/coursesManagement/newCourses/showCourse/'.$new_course_request->id) }}">
+                                                    @foreach($new_course_request->curriculums()->get() as $curriculum)
+                                                        {{ $curriculum->name }} <br/>
+                                                    @endforeach
                                                 </a>
                                             </td>
                                             <td>

@@ -44,9 +44,12 @@ class CoursesManagementNewCoursesController extends Controller {
             $new_course_request->save();
 
             $curriculum_array = explode(', ', $request->input('curriculum'));
+            $curriculum_id_array = array();
             foreach($curriculum_array as $curriculum) {
-                $new_course_request->curriculums()->attach(CourseSubCurriculum::where('name', $curriculum)->first()->id);
+                $curriculum_id_array[] = CourseSubCurriculum::where('name', $curriculum)->first()->id;
             }
+
+            $new_course_request->curriculums()->sync($curriculum_id_array);
 
         });
 

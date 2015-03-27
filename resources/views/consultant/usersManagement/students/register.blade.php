@@ -79,20 +79,20 @@
             };
 
             p._handleStudentAdd = function(e) {
-                var number_of_students = Number($("input[name='number_of_students']").val());
+                var number_of_students = Number($("input[name=number_of_students]").val());
                 number_of_students++;
-                $("input[name='number_of_students").val(number_of_students);
+                $("input[name=number_of_students]").val(number_of_students);
                 var row = "<div class='form-group'><div class='col-lg-3 col-md-2 col-sm-3'><label for='name_kor_"+number_of_students+"' class='control-label'>학생 이름 "+number_of_students+"</label></div><div class='col-lg-9 col-md-10 col-sm-9'><input type='text' name='name_kor_"+number_of_students+"' id='name_kor_"+number_of_students+"' class='form-control' placeholder='학생 이름 "+number_of_students+"' data-rule-minlength='2' required=''></div></div><div class='form-group'><div class='col-lg-3 col-md-2 col-sm-3'><label for='email_"+number_of_students+"' class='control-label'>학생 이메일 "+number_of_students+"</label></div><div class='col-lg-9 col-md-10 col-sm-9'><input type='email' name='email_"+number_of_students+"' id='email_"+number_of_students+"' class='form-control' placeholder='학생 이메일 "+number_of_students+"' required=''></div></div>";
                 $("#last_line").before(row);
             };
 
             p._handleStudentRemove = function(e) {
-                var number_of_students = Number($("input[name='number_of_students']").val());
+                var number_of_students = Number($("input[name=number_of_students]").val());
                 if(number_of_students == 1) {
                     return false;
                 }
                 number_of_students--;
-                $("input[name='number_of_students").val(number_of_students);
+                $("input[name=number_of_students]").val(number_of_students);
                 $(".form-group").last().remove();
                 $(".form-group").last().remove();
             };
