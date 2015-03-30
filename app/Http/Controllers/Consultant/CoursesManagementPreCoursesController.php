@@ -150,12 +150,15 @@ class CoursesManagementPreCoursesController extends Controller {
 
                     $new_lvl_test->lvl_test_mc_id = $new_lvl_test_mc->id;
 
+                    $pre_course = Course::find($pre_course_id);
+
+                    $new_lvl_test->start_date = explode(' ', $pre_course->start_datetime)[0];
+                    $new_lvl_test->end_date = explode(' ', $pre_course->end_datetime)[0];
+
                     $new_lvl_test->save();
 
                     $student->pivot->lvl_test_id = $new_lvl_test->id;
                     $student->pivot->save();
-
-                    //TODO : 테스트 진행 메일 전송 + lvl_test 의 start_date end_date 설정
                 }
            }
         });

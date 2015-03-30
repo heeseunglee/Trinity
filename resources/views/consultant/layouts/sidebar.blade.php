@@ -13,7 +13,7 @@
     </div>
     <ul class="main-menu">
         <?php
-        $current_url = Request::url();
+            $current_url = Request::url();
         ?>
         <li @if(strpos($current_url, 'coursesManagement')) class = "active expanded" @endif>
             <a href="javascript:void(0);">

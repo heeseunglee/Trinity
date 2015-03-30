@@ -24,33 +24,38 @@ Route::controllers([
 
 Route::get('/', 'IndexController@index');
 
-Route::post('firstLogin/Student', 'Student\FirstLoginController@update');
+Route::group(['prefix' => 'firstLogin', 'middleware' => 'auth'], function() {
 
-Route::post('firstLogin/Instructor', 'Instructor\FirstLoginController@update');
+    Route::post('Student', 'Student\FirstLoginController@update');
 
-Route::get('firstLogin/Instructor/popups/certificate', function() {
-    return view('instructor.popups.firstLogin.certificate');
+    Route::post('Instructor', 'Instructor\FirstLoginController@update');
+
+    Route::get('Instructor/popups/certificate', function() {
+        return view('instructor.popups.firstLogin.certificate');
+    });
+
+    Route::get('Instructor/popups/otherCertificate', function() {
+        return view('instructor.popups.firstLogin.otherCertificate');
+    });
+
+    Route::get('Instructor/popups/curriculum', function() {
+        return view('instructor.popups.firstLogin.curriculum')
+            ->with('course_main_curriculums', CourseMainCurriculum::all());;
+    });
+
+    Route::get('Instructor/popups/preferredArea', function() {
+        return view('instructor.popups.firstLogin.preferredArea')
+            ->with('preferred_area_groups', PreferredAreaGroup::all());
+    });
+
+    Route::post('Hr', 'Hr\FirstLoginController@update');
+
+    Route::post('Consultant', 'Consultant\FirstLoginController@update');
+
 });
 
-Route::get('firstLogin/Instructor/popups/otherCertificate', function() {
-    return view('instructor.popups.firstLogin.otherCertificate');
-});
 
-Route::get('firstLogin/Instructor/popups/curriculum', function() {
-    return view('instructor.popups.firstLogin.curriculum')
-        ->with('course_main_curriculums', CourseMainCurriculum::all());;
-});
-
-Route::get('firstLogin/Instructor/popups/preferredArea', function() {
-    return view('instructor.popups.firstLogin.preferredArea')
-        ->with('preferred_area_groups', PreferredAreaGroup::all());
-});
-
-Route::post('firstLogin/Hr', 'Hr\FirstLoginController@update');
-
-Route::post('firstLogin/Consultant', 'Consultant\FirstLoginController@update');
-
-Route::group(['prefix' => 'Consultant', 'middleware' => 'auth'], function() {
+Route::group(['prefix' => 'Consultant', 'middleware' => ['auth', 'firstLogin', 'role']], function() {
 
     Route::get('/', function() {
         return redirect('Consultant/coursesManagement/index');
@@ -96,8 +101,6 @@ Route::group(['prefix' => 'Consultant', 'middleware' => 'auth'], function() {
                         ->with('course_main_curriculum', CourseMainCurriculum::find($course_main_curriculum_id));
                 }
 
-                return \Response::error('404');
-
             });
 
         });
@@ -128,6 +131,33 @@ Route::group(['prefix' => 'Consultant', 'middleware' => 'auth'], function() {
             });
 
             Route::post('removeStudents/{pre_course_id}', 'Consultant\CoursesManagementPreCoursesController@removeStudents');
+
+            Route::get('register', function() {
+                return view('consultant.coursesManagement.preCourses.register');
+            });
+
+            Route::get('popups/curriculum', function() {
+                return view('consultant.coursesManagement.preCourses.popups.curriculum')
+                    ->with('course_main_curriculums', CourseMainCurriculum::all());
+            });
+
+            Route::get('ajax/subCurriculum/{course_main_curriculum_id}', function($course_main_curriculum_id) {
+
+                if(\Request::ajax()) {
+                    return view('consultant.coursesManagement.preCourses.ajax.subCurriculum')
+                        ->with('course_main_curriculum', CourseMainCurriculum::find($course_main_curriculum_id));
+                }
+
+            });
+
+            Route::get('ajax/hrSelect/{company_id}', function($company_id) {
+
+                if(\Request::ajax()) {
+                    return view('consultant.coursesManagement.preCourses.ajax.hrSelect')
+                        ->with('hrs', \App\Company::find($company_id)->hrs);
+                }
+
+            });
         });
 
     });
@@ -215,7 +245,7 @@ Route::group(['prefix' => 'Consultant', 'middleware' => 'auth'], function() {
 
 });
 
-Route::group(['prefix' => 'Student', 'middleware' => 'auth'], function() {
+Route::group(['prefix' => 'Student', 'middleware' => ['auth', 'firstLogin', 'role']], function() {
 
     Route::get('/', function() {
         return redirect('Student/coursesManagement/index');
@@ -283,7 +313,7 @@ Route::group(['prefix' => 'Student', 'middleware' => 'auth'], function() {
 
 });
 
-Route::group(['prefix' => 'Hr', 'middleware' => 'auth'], function() {
+Route::group(['prefix' => 'Hr', 'middleware' => ['auth', 'firstLogin', 'role']], function() {
 
     Route::get('/', function() {
         return redirect('Hr/coursesManagement/index');
@@ -331,7 +361,7 @@ Route::group(['prefix' => 'Hr', 'middleware' => 'auth'], function() {
 
 });
 
-Route::group(['prefix' => 'Instructor', 'middleware' => 'auth'], function() {
+Route::group(['prefix' => 'Instructor', 'middleware' => ['auth', 'firstLogin', 'role']], function() {
 
     Route::get('/', function() {
         return redirect('Instructor/coursesManagement/index');

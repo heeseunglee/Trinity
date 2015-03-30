@@ -55,7 +55,7 @@
             @endif
             <div class="row">
                 <!-- START HEADER XS BOX -->
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="box">
                         <div class="box-head box-head-xs style-primary">
                             <header><h5 class="text-light">Pre 클래스 정보</h5></header>
@@ -123,6 +123,58 @@
                                     <td>교육 장소</td>
                                     <td>{{ $pre_course->location }}</td>
                                 </tr>
+                                </tbody>
+                            </table>
+                            {!! Form::open(['class' => 'form-horizontal']) !!}
+                                <div class="form-footer text-right">
+                                    <button type="submit" class="btn btn-success">Pre 클래스 완료 및 클래스 개설하기</button>
+                                </div>
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="box">
+                        <div class="box-head box-head-xs style-primary">
+                            <header><h5 class="text-light">클래스 요청 정보</h5></header>
+                            <div class="tools">
+                                <div class="btn-group btn-group-transparent">
+                                    <a class="btn btn-equal btn-sm btn-collapse"><i class="fa fa-angle-down"></i></a>
+                                    <a class="btn btn-equal btn-sm btn-close"><i class="fa fa-times"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                            $new_course_request = $pre_course->newCourseRequest;
+                        ?>
+                        <div class="box-body">
+                            <table class="table text-center table-vertical-align-middle table-condensed table-banded">
+                                <tbody>
+                                    <tr>
+                                        <td>교육 형태</td>
+                                        <td>{{ $new_course_request->courseType->name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>교육 시작일</td>
+                                        <td>{{ explode(' ', $new_course_request->start_datetime)[0] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>교육 종료일</td>
+                                        <td>{{ explode(' ', $new_course_request->end_datetime)[0] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>교육 시작시간</td>
+                                        <td>{{ substr(explode(' ', $new_course_request->start_datetime)[1], 0, -3) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>교육 종료시간</td>
+                                        <td>{{ substr(explode(' ', $new_course_request->end_datetime)[1], 0, -3) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>기타 요청사항</td>
+                                        <td>{{ $new_course_request->other_requests }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

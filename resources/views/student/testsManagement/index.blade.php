@@ -143,10 +143,10 @@
                                         <th>상태</th>
                                         <th>시험명</th>
                                         <th>시험 가능기간</th>
-                                        <th>시험 시간</th>
-                                        <th>문항수</th>
-                                        <th>레벨</th>
-                                        <th>진행도</th>
+                                        <th>듣기 테스트</th>
+                                        <th>객관식 테스트</th>
+                                        <th>필기 테스트</th>
+                                        <th>말하기 테스트</th>
                                         <th style="width: 90px;">작업</th>
                                     </tr>
                                 </thead>
@@ -161,14 +161,27 @@
                                                 TODO
                                             </td>
                                             <td>
-                                                TODO
+                                                NA
                                             </td>
-                                            <td></td>
-                                            <td></td>
                                             <td>
-                                                <div class="progress no-margin">
-                                                    <div class="progress-bar progress-bar-success" style="width: 0%"></div>
-                                                </div>
+                                                <?php
+                                                    $mc_status = $test->lvlTestMc->status;
+                                                ?>
+                                                @if($mc_status == 'r')
+                                                    <span class="label label-default">준비</span>
+                                                @elseif($mc_status == 'p')
+                                                    <span class="label label-success">진행중</span>
+                                                @elseif($mc_status == 'pa')
+                                                    <span class="label label-warning">일시정지</span>
+                                                @elseif($mc_status == 'c')
+                                                    <span class="label label-danger">완료</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                NA
+                                            </td>
+                                            <td>
+                                                NA
                                             </td>
                                             <td>
                                                 <?php

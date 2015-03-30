@@ -107,6 +107,13 @@
         alert('시험이 일시정시 상태가 되었습니다. 시험을 종료합니다.');
         window.close();
     }
+
+//    $(document).ready(function() {
+//        $("html").mouseleave(function() {
+//            pauseMcTest();
+//        });
+//    });
+
 </script>
 </body>
 </html>

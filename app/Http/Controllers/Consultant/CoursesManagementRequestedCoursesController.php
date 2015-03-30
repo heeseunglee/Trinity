@@ -31,7 +31,6 @@ class CoursesManagementRequestedCoursesController extends Controller {
 
             $new_course_request->status = 'ca';
             $new_course_request->approved_by = $current_user->userable_id;
-            $new_course_request->save();
 
             $new_course = new Course();
 
@@ -41,13 +40,23 @@ class CoursesManagementRequestedCoursesController extends Controller {
             $new_course->hr_id = $new_course_request->hr_id;
             $new_course->company_id = $new_course_request->company_id;
             $new_course->course_type_id = $new_course_request->course_type_id;
-            $new_course->start_datetime = $new_course_request->start_datetime;
-            $new_course->end_datetime = $new_course_request->end_datetime;
+
+            $start_datetime = new \DateTime('now');
+            $start_datetime->setTime(6, 0);
+            $new_course->start_datetime = $start_datetime;
+
+            $end_datetime = new \DateTime('+7 days');
+            $end_datetime->setTime(21, 0);
+            $new_course->end_datetime = $end_datetime;
+
             $new_course->running_days = $new_course_request->running_days;
             $new_course->location = $new_course_request->location;
             $new_course->status = 'p';
 
             $new_course->save();
+
+            $new_course_request->pre_course_id = $new_course->id;
+            $new_course_request->save();
 
             $curriculum_id_array = array();
             foreach($new_course_request->curriculums()->get() as $curriculum) {

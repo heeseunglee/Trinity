@@ -55,4 +55,10 @@ class Course extends Model {
             ->withPivot('lvl_test_id');
     }
 
+    public function newCourseRequest() {
+        if($this->is_pre_course) {
+            return $this->hasOne('App\NewCourseRequest', 'pre_course_id');
+        }
+    }
+
 }

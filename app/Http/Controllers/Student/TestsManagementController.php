@@ -110,26 +110,12 @@ class TestsManagementController extends Controller {
                 $lvl_test_mc = $lvl_test->lvlTestMc;
 
                 if($lvl_test_mc->proceed_step == 0) {
+
                     $lvl_test_mc_result = $lvl_test->lvl_test_mc_result;
-                    \DB::transaction(function() use($lvl_test, $lvl_test_mc, $lvl_test_mc_result) {
-                        for($i = 1; $i <= 5; $i++) {
-                            $pool_id = \DB::table('lvl_test_mcs')
-                                ->where('id', $lvl_test_mc->id)
-                                ->pluck('question_'.$i);
-                            $answer_selected = \DB::table('lvl_test_mcs')
-                                ->where('id', $lvl_test_mc->id)
-                                ->pluck('answer_'.$i);
-                            $answer = LvlTestMcPoolBeginner::find($pool_id)->answer;
-                            if($answer_selected == $answer) {
-                                $lvl_test_mc_result += 1;
-                            }
-                        }
-                        $lvl_test->lvl_test_mc_result = $lvl_test_mc_result;
+                    $lvl_test_mc_result += $this->scoreTheTest(1, 5, 1, $lvl_test_mc);
+                    $lvl_test->lvl_test_mc_result = $lvl_test_mc_result;
 
-                        \DB::table('lvl_test_mcs')
-                            ->where('id', $lvl_test_mc->id)
-                            ->increment('proceed_step');
-
+                    \DB::transaction(function() use($lvl_test, $lvl_test_mc) {
                         $lvl_test_mc->save();
                         $lvl_test->save();
                     });
@@ -138,29 +124,16 @@ class TestsManagementController extends Controller {
                         ->with('lvl_test', $lvl_test)
                         ->with('lvl_test_mc', $lvl_test_mc)
                         ->with('encrypted_test_id', $encrypted_test_id);
+
                 }
 
                 if($lvl_test_mc->proceed_step == 1) {
+
                     $lvl_test_mc_result = $lvl_test->lvl_test_mc_result;
-                    \DB::transaction(function() use($lvl_test, $lvl_test_mc, $lvl_test_mc_result) {
-                        for($i = 6; $i <= 10; $i++) {
-                            $pool_id = \DB::table('lvl_test_mcs')
-                                ->where('id', $lvl_test_mc->id)
-                                ->pluck('question_'.$i);
-                            $answer_selected = \DB::table('lvl_test_mcs')
-                                ->where('id', $lvl_test_mc->id)
-                                ->pluck('answer_'.$i);
-                            $answer = LvlTestMcPoolElementary::find($pool_id)->answer;
-                            if($answer_selected == $answer) {
-                                $lvl_test_mc_result += 2;
-                            }
-                        }
-                        $lvl_test->lvl_test_mc_result = $lvl_test_mc_result;
+                    $lvl_test_mc_result += $this->scoreTheTest(6, 10, 2, $lvl_test_mc);
+                    $lvl_test->lvl_test_mc_result = $lvl_test_mc_result;
 
-                        \DB::table('lvl_test_mcs')
-                            ->where('id', $lvl_test_mc->id)
-                            ->increment('proceed_step');
-
+                    \DB::transaction(function() use($lvl_test, $lvl_test_mc) {
                         $lvl_test_mc->save();
                         $lvl_test->save();
                     });
@@ -169,55 +142,16 @@ class TestsManagementController extends Controller {
                         ->with('lvl_test', $lvl_test)
                         ->with('lvl_test_mc', $lvl_test_mc)
                         ->with('encrypted_test_id', $encrypted_test_id);
+
                 }
 
                 if($lvl_test_mc->proceed_step == 2) {
+
                     $lvl_test_mc_result = $lvl_test->lvl_test_mc_result;
-                    \DB::transaction(function() use($lvl_test, $lvl_test_mc, $lvl_test_mc_result) {
-                        for($i = 11; $i <= 15; $i++) {
+                    $lvl_test_mc_result += $this->scoreTheTest(11, 15, 3, $lvl_test_mc);
+                    $lvl_test->lvl_test_mc_result = $lvl_test_mc_result;
 
-                            if($i == 13 or $i == 14) {
-                                $pool_id = \DB::table('lvl_test_mcs')
-                                    ->where('id', $lvl_test_mc->id)
-                                    ->pluck('question_'.$i);
-                                $answer_selected_1 = \DB::table('lvl_test_mcs')
-                                    ->where('id', $lvl_test_mc->id)
-                                    ->pluck('answer_'.$i.'1');
-                                $answer_selected_2 = \DB::table('lvl_test_mcs')
-                                    ->where('id', $lvl_test_mc->id)
-                                    ->pluck('answer_'.$i.'2');
-                                $answer_1 = LvlTestMcPoolIntermediate::find($pool_id)->answer;
-                                $answer_2 = LvlTestMcPoolIntermediate::find($pool_id)->answer_2;
-
-                                if($answer_selected_1 == $answer_1) {
-                                    $lvl_test_mc_result += 1.5;
-                                }
-
-                                if($answer_selected_2 == $answer_2) {
-                                    $lvl_test_mc_result += 1.5;
-                                }
-
-                            }
-                            else {
-                                $pool_id = \DB::table('lvl_test_mcs')
-                                    ->where('id', $lvl_test_mc->id)
-                                    ->pluck('question_'.$i);
-                                $answer_selected = \DB::table('lvl_test_mcs')
-                                    ->where('id', $lvl_test_mc->id)
-                                    ->pluck('answer_'.$i);
-                                $answer = LvlTestMcPoolIntermediate::find($pool_id)->answer;
-                                if($answer_selected == $answer) {
-                                    $lvl_test_mc_result += 3;
-                                }
-                            }
-
-                        }
-                        $lvl_test->lvl_test_mc_result = $lvl_test_mc_result;
-
-                        \DB::table('lvl_test_mcs')
-                            ->where('id', $lvl_test_mc->id)
-                            ->increment('proceed_step');
-
+                    \DB::transaction(function() use($lvl_test, $lvl_test_mc) {
                         $lvl_test_mc->save();
                         $lvl_test->save();
                     });
@@ -226,47 +160,95 @@ class TestsManagementController extends Controller {
                         ->with('lvl_test', $lvl_test)
                         ->with('lvl_test_mc', $lvl_test_mc)
                         ->with('encrypted_test_id', $encrypted_test_id);
+
                 }
 
                 if($lvl_test_mc->proceed_step == 3) {
+
                     $lvl_test_mc_result = $lvl_test->lvl_test_mc_result;
-                    \DB::transaction(function() use($lvl_test, $lvl_test_mc, $lvl_test_mc_result) {
-                        for($i = 16; $i <= 20; $i++) {
-                            $pool_id = \DB::table('lvl_test_mcs')
-                                ->where('id', $lvl_test_mc->id)
-                                ->pluck('question_'.$i);
-                            $answer_selected = \DB::table('lvl_test_mcs')
-                                ->where('id', $lvl_test_mc->id)
-                                ->pluck('answer_'.$i);
-                            $answer = LvlTestMcPoolExpert::find($pool_id)->answer;
-                            if($answer_selected == $answer) {
-                                $lvl_test_mc_result += 2;
-                            }
-                        }
-                        $lvl_test->lvl_test_mc_result = $lvl_test_mc_result;
+                    $lvl_test_mc_result += $this->scoreTheTest(16, 20, 4, $lvl_test_mc);
+                    $lvl_test->lvl_test_mc_result = $lvl_test_mc_result;
 
-                        \DB::table('lvl_test_mcs')
-                            ->where('id', $lvl_test_mc->id)
-                            ->increment('proceed_step');
+                    // TODO::여기서 아직 모든것을 종료시키지는 않는다! 시험 추가되면 수정해야됨
 
-                        $lvl_test_mc->status = 'c';
-                        $lvl_test_mc->finished_at = new \DateTime('now');
+                    $lvl_test_mc->status = 'c';
+                    $lvl_test->status = 'c';
 
+                    \DB::transaction(function() use($lvl_test, $lvl_test_mc) {
                         $lvl_test_mc->save();
-
-                        // TODO::나중에 듣기랑 쓰기가 추가되면 수정해야될 부분임
-                        // 테스트 전체가 마무리 되면 안됨.
-                        $lvl_test->status = 'c';
                         $lvl_test->save();
                     });
 
                     return view('student.testsManagement.completeTest');
+
                 }
 
             }
 
         }
 
+    }
+
+    protected function scoreTheTest($num_start, $num_end, $score, $lvl_test_mc) {
+
+        $lvl_test_mc_result = 0;
+
+        for($i = $num_start; $i <= $num_end; $i++) {
+
+            if($i == 13 or $i == 14) {
+                $pool_id = \DB::table('lvl_test_mcs')
+                    ->where('id', $lvl_test_mc->id)
+                    ->pluck('question_'.$i);
+                $answer_selected_1 = \DB::table('lvl_test_mcs')
+                    ->where('id', $lvl_test_mc->id)
+                    ->pluck('answer_'.$i.'1');
+                $answer_selected_2 = \DB::table('lvl_test_mcs')
+                    ->where('id', $lvl_test_mc->id)
+                    ->pluck('answer_'.$i.'2');
+                $answer_1 = LvlTestMcPoolIntermediate::find($pool_id)->answer;
+                $answer_2 = LvlTestMcPoolIntermediate::find($pool_id)->answer_2;
+
+                if($answer_selected_1 == $answer_1) {
+                    $lvl_test_mc_result += floatval($score) / 2 ;
+                }
+
+                if($answer_selected_2 == $answer_2) {
+                    $lvl_test_mc_result += floatval($score) / 2;
+                }
+
+            }
+            else {
+                $pool_id = \DB::table('lvl_test_mcs')
+                    ->where('id', $lvl_test_mc->id)
+                    ->pluck('question_'.$i);
+                $answer_selected = \DB::table('lvl_test_mcs')
+                    ->where('id', $lvl_test_mc->id)
+                    ->pluck('answer_'.$i);
+
+                if($num_end == 5) {
+                    $answer = LvlTestMcPoolBeginner::find($pool_id)->answer;
+                }
+                if($num_end == 10) {
+                    $answer = LvlTestMcPoolElementary::find($pool_id)->answer;
+                }
+                if($num_end == 15) {
+                    $answer = LvlTestMcPoolIntermediate::find($pool_id)->answer;
+                }
+                if($num_end == 20) {
+                    $answer = LvlTestMcPoolExpert::find($pool_id)->answer;
+                }
+                if($answer_selected == $answer) {
+                    $lvl_test_mc_result += $score;
+                }
+            }
+
+        }
+
+        \DB::table('lvl_test_mcs')
+            ->where('id', $lvl_test_mc->id)
+            ->increment('proceed_step');
+
+        return $lvl_test_mc_result;
     }
 
 }

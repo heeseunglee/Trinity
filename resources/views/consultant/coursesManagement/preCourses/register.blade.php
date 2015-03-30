@@ -1,4 +1,4 @@
-@extends('hr.layouts.master')
+@extends('consultant.layouts.master')
 
 @section('additional_css_includes')
     <link type="text/css" rel="stylesheet" href="{{ asset('/css/theme-default/libs/jquery-timepicker/jquery.timepicker.css') }}"/>
@@ -44,10 +44,19 @@
             // =========================================================================
 
             p._initEvents = function() {
+                $("#company_id").on('change', function(e) {
+                    if(!$(this).val()) {
+                        $("#hr_id").html("<option value=''>선택하세요</option>");
+                        return false;
+                    }
+                    $.get('ajax/hrSelect/' + $(this).val(), function(data) {
+                        $("#hr_id").html(data);
+                    });
+                });
                 $("#curriculum").on('click', function(e) {
                     window.open('popups/curriculum',
-                                'popup',
-                                'width=800px, height=600px, left=0, top=0, resizeable=false');
+                            'popup',
+                            'width=800px, height=600px, left=0, top=0, resizeable=false');
                 });
             };
 
@@ -80,17 +89,16 @@
                     return;
                 }
 
-                var now = new Date();
-                var min_date = new Date(now);
-                min_date.setDate(min_date.getDate()+13);
+                var nowTemp = new Date();
+                var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
-                var start_date = $("input[name=start_date]").datepicker({
+                var start_date = $('input[name=start_date]').datepicker({
                     format: 'yyyy-mm-dd',
                     onRender: function(date) {
-                        return date.valueOf() < min_date.valueOf() ? 'disabled' : '';
+                        return date.valueOf() < now.valueOf() ? 'disabled' : '';
                     }
                 }).on('changeDate', function(ev) {
-                    if (ev.date.valueOf() > end_date.date.valueOf()) {
+                    if (ev.date.valueOf() >= end_date.date.valueOf()) {
                         var newDate = new Date(ev.date);
                         newDate.setDate(newDate.getDate() + 1);
                         end_date.setValue(newDate);
@@ -98,9 +106,6 @@
                     start_date.hide();
                     $('input[name=end_date]')[0].focus();
                 }).data('datepicker');
-
-                start_date.setValue("{{ date_format(new \DateTime('+14 days'), 'Y-m-d') }}");
-
                 var end_date = $('input[name=end_date]').datepicker({
                     format: 'yyyy-mm-dd',
                     onRender: function(date) {
@@ -108,16 +113,6 @@
                     }
                 }).on('changeDate', function(ev) {
                     end_date.hide();
-                }).data('datepicker');
-
-                now.setDate(now.getDate()-1);
-                var meeting_date = $("input[name=meeting_date]").datepicker({
-                    format: 'yyyy-mm-dd',
-                    onRender: function(date) {
-                        return date.valueOf() < now.valueOf() ? 'disabled' : '';
-                    }
-                }).on('changeDate', function(ev) {
-                    meeting_date.hide();
                 }).data('datepicker');
 
             };
@@ -132,10 +127,11 @@
         <ol class="breadcrumb">
             <li><a href="{{ URL::to('index') }}">메인 페이지</a></li>
             <li><a href="{{ URL::to('Hr/coursesManagement/index') }}">클래스 관리</a></li>
-            <li class="active">신규 클래스 관리</li>
+            <li><a href="{{ URL::to('Hr/coursesManagement/preCourses/index') }}">Pre 클래스 관리</a></li>
+            <li class="active">Pre 클래스 등록</li>
         </ol>
         <div class="section-header">
-            <h3 class="text-standard"><i class="fa fa-fw fa-arrow-circle-right text-gray-light"></i> 신규 클래스 등록</h3>
+            <h3 class="text-standard"><i class="fa fa-fw fa-arrow-circle-right text-gray-light"></i> Pre 클래스 등록</h3>
         </div>
         <div class="section-body">
             @include('flash::message')
@@ -154,42 +150,34 @@
                 <div class="col-lg-12">
                     <div class="box">
                         <div class="box-head box-head-xs style-primary">
-                            <header><h5 class="text-light">기본 정보</h5></header>
-                        </div>
-                        <div class="box-body">
-                            <table class="table table-bordered no-margin text-center">
-                                <tbody>
-                                    <tr>
-                                        <td class="style-support3">회사명</td>
-                                        <td>{{ $current_user->userable->company->name }}</td>
-                                        <td class="style-support3">HR 담당자</td>
-                                        <td>{{ $current_user->name_kor }}</td>
-                                        <td class="style-support3">담당 컨설턴트</td>
-                                        <td>{{ $current_user->userable->consultant->user->name_kor }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="style-support3">총 클래스 수</td>
-                                        <td>{{ $current_user->userable->company->courses->count() }}</td>
-                                        <td class="style-support3">총 학생 수</td>
-                                        <td>{{ $current_user->userable->company->students->count() }}</td>
-                                        <td colspan="2">{{ date("Y년 m월 d일 H:i:s 기준") }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <!-- START HEADER XS BOX -->
-                <div class="col-lg-12">
-                    <div class="box">
-                        <div class="box-head box-head-xs style-primary">
-                            <header><h5 class="text-light">신규 클래스 등록</h5></header>
+                            <header><h5 class="text-light">Pre 클래스 등록</h5></header>
                         </div>
                         <div class="box-body">
                             {!! Form::open(['class' => 'form-horizontal form-validate text-center',
-                                            'role' => 'form']) !!}
+                            'role' => 'form']) !!}
+
+                                <div class="form-group">
+                                    <div class="col-lg-3 col-md-2 col-sm-3">
+                                        <label for="company_id" class="control-label">고객사</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-10 col-sm-9">
+                                        <select class="form-control" name="company_id" id="company_id">
+                                            <option value="">선택하세요</option>
+                                            @foreach(App\Company::all() as $company)
+                                                <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-3 col-md-2 col-sm-3">
+                                        <label for="hr_id" class="control-label">인사담당자</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-10 col-sm-9" id="hr_id">
+
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
                                     <div class="col-lg-3 col-md-2 col-sm-3">
@@ -282,7 +270,7 @@
                                         <label for="start_date" class="control-label">클래스 희망 시작일</label>
                                     </div>
                                     <div class="col-lg-3 col-md-4 col-sm-3">
-                                        <input type="text" name="start_date" class="form-control input-datetimepicker" data-toggle="modal" data-target="#textModal" required=""/>
+                                        <input type="text" name="start_date" class="form-control input-datetimepicker" required=""/>
                                     </div>
                                     <div class="col-lg-3 col-md-2 col-sm-3">
                                         <label for="end_date" class="control-label">클래스 희망 종료일</label>
@@ -397,24 +385,4 @@
             </div>
         </div>
     </section>
-    <!-- START LARGE TEXT MODAL MARKUP -->
-    <div class="modal fade" id="textModal" tabindex="-1" role="dialog" aria-labelledby="textModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="textModalLabel">클래스 요청 주의사항</h4>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        만약 요청 클래스의 희망 시작일의 잉여 날짜가 2주보다 적을 시, 유선상으로 컨설턴트와 직접 상의해서 요청하여 주시기 바랍니다.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">진행하기</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <!-- END LARGE TEXT MODAL MARKUP -->
 @stop
