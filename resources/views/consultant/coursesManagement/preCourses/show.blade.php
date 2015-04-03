@@ -4,6 +4,8 @@
 @stop
 
 @section('additional_js_includes')
+    <script src="{{ asset('/js/libs/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('/js/libs/ckeditor/adapters/jquery.js') }}"></script>
     <script>
         (function(namespace, $) {
             "use strict";
@@ -24,6 +26,15 @@
             // =========================================================================
 
             p.initialize = function() {
+                this._initCKEditor();
+            };
+
+            // =========================================================================
+            // CKEDITOR
+            // =========================================================================
+
+            p._initCKEditor = function() {
+                $('#ckeditor').ckeditor();
             };
 
             namespace.Show = new Show;
@@ -69,65 +80,39 @@
                         <div class="box-body">
                             <table class="table text-center table-vertical-align-middle table-condensed table-banded">
                                 <tbody>
-                                <tr>
-                                    <td>과정명</td>
-                                    <td>{{ $pre_course->name }}</td>
-                                </tr>
-                                <tr>
-                                    <td>담당자</td>
-                                    <td>{{ $pre_course->hr->user->name_kor }}</td>
-                                </tr>
-                                <tr>
-                                    <td>고객사</td>
-                                    <td>{{ $pre_course->company->name }}</td>
-                                </tr>
-                                <tr>
-                                    <td>컨설턴트</td>
-                                    <td>{{ $pre_course->hr->consultant->user->name_kor }}</td>
-                                </tr>
-                                <tr>
-                                    <td>교육 형태</td>
-                                    <td>{{ $pre_course->courseType->name }}</td>
-                                </tr>
-                                <tr>
-                                    <td>교육 시작일</td>
-                                    <td>{{ explode(' ', $pre_course->start_datetime)[0] }}</td>
-                                </tr>
-                                <tr>
-                                    <td>교육 종료일</td>
-                                    <td>{{ explode(' ', $pre_course->end_datetime)[0] }}</td>
-                                </tr>
-                                <tr>
-                                    <td>교육 시작시간</td>
-                                    <td>{{ substr(explode(' ', $pre_course->start_datetime)[1], 0, -3) }}</td>
-                                </tr>
-                                <tr>
-                                    <td>교육 종료시간</td>
-                                    <td>{{ substr(explode(' ', $pre_course->end_datetime)[1], 0, -3) }}</td>
-                                </tr>
-                                <tr>
-                                    <td>수강 요일</td>
-                                    <td>
-                                        <?php
-                                            $days_array = ['일', '월', '화', '수', '목', '금', '토'];
-                                            $running_days_array = explode(', ', $pre_course->running_days);
-                                            $running_days_result_array = array();
-                                            foreach($running_days_array as $running_day) {
-                                                $running_days_result_array[] = $days_array[$running_day % 7];
-                                            }
-                                        ?>
-                                        {{ implode(', ', $running_days_result_array) }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>교육 장소</td>
-                                    <td>{{ $pre_course->location }}</td>
-                                </tr>
+                                    <tr>
+                                        <td>과정명</td>
+                                        <td>{{ $pre_course->name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>담당자</td>
+                                        <td>{{ $pre_course->hr->user->name_kor }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>고객사</td>
+                                        <td>{{ $pre_course->company->name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>컨설턴트</td>
+                                        <td>{{ $pre_course->hr->consultant->user->name_kor }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>교육 형태</td>
+                                        <td>{{ $pre_course->courseType->name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>교육 시작일</td>
+                                        <td>{{ explode(' ', $pre_course->start_datetime)[0] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>교육 종료일</td>
+                                        <td>{{ explode(' ', $pre_course->end_datetime)[0] }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                             {!! Form::open(['class' => 'form-horizontal']) !!}
                                 <div class="form-footer text-right">
-                                    <button type="submit" class="btn btn-success">Pre 클래스 완료 및 클래스 개설하기</button>
+                                    <button type="submit" class="btn btn-success">Pre 클래스 완료</button>
                                 </div>
                             {!! Form::close() !!}
                         </div>
@@ -172,8 +157,30 @@
                                         <td>{{ substr(explode(' ', $new_course_request->end_datetime)[1], 0, -3) }}</td>
                                     </tr>
                                     <tr>
+                                        <td>수강 요일</td>
+                                        <td>
+                                            <?php
+                                            $days_array = ['일', '월', '화', '수', '목', '금', '토'];
+                                            $running_days_array = explode(', ', $pre_course->running_days);
+                                            $running_days_result_array = array();
+                                            foreach($running_days_array as $running_day) {
+                                                $running_days_result_array[] = $days_array[$running_day % 7];
+                                            }
+                                            ?>
+                                            {{ implode(', ', $running_days_result_array) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>교육 장소</td>
+                                        <td>{{ $pre_course->location }}</td>
+                                    </tr>
+                                    <tr>
                                         <td>기타 요청사항</td>
-                                        <td>{{ $new_course_request->other_requests }}</td>
+                                        <td>
+                                            <textarea id="ckeditor" name="other_requests" class="form-control control-12-rows" placeholder="Enter text ...">
+                                                {{ $new_course_request->other_requests }}
+                                            </textarea>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -205,8 +212,19 @@
                                             <td>{{ $student->user->name_kor }}</td>
                                             <td>{{ $student->user->email }}</td>
                                             <td>{{ $student->user->phone_number }}</td>
-                                            <td>TODO</td>
-                                            <td>TODO</td>
+                                            <?php
+                                                $lvl_test = $student->lvlTests()->where('course_id', $pre_course->id)->first();
+                                            ?>
+                                            <td>
+                                                @if($lvl_test->status == 'w')
+                                                    <span class="label label-warning">대기</span>
+                                                @elseif($lvl_test->status == 'p')
+                                                    <span class="label label-success">진행 중</span>
+                                                @else
+                                                    <span class="label label-danger">완료</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ floatval($lvl_test->lvl_test_mc_result) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

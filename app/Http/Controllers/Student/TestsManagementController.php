@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 
 class TestsManagementController extends Controller {
 
+    // TODO : 포기 시퀀스 이름이 맘에 안듬....새로 고쳐야 할듯
     public function participate($encrypted_test_id) {
         \DB::transaction(function() use ($encrypted_test_id) {
             $test_id = \Crypt::decrypt($encrypted_test_id);
@@ -112,13 +113,25 @@ class TestsManagementController extends Controller {
                 if($lvl_test_mc->proceed_step == 0) {
 
                     $lvl_test_mc_result = $lvl_test->lvl_test_mc_result;
-                    $lvl_test_mc_result += $this->scoreTheTest(1, 5, 1, $lvl_test_mc);
+                    $step_result = $this->scoreTheTest(1, 5, 1, $lvl_test_mc);
+                    $lvl_test_mc_result += $step_result;
                     $lvl_test->lvl_test_mc_result = $lvl_test_mc_result;
 
                     \DB::transaction(function() use($lvl_test, $lvl_test_mc) {
                         $lvl_test_mc->save();
                         $lvl_test->save();
                     });
+
+                    if($step_result <= 2) {
+                        $lvl_test_mc->status = 'c';
+                        $lvl_test->status = 'c';
+
+                        \DB::transaction(function() use($lvl_test, $lvl_test_mc) {
+                            $lvl_test_mc->save();
+                            $lvl_test->save();
+                        });
+                        return view('student.testsManagement.completeTest');
+                    }
 
                     return view('student.testsManagement.popups.partials.takeTestElementary')
                         ->with('lvl_test', $lvl_test)
@@ -130,13 +143,25 @@ class TestsManagementController extends Controller {
                 if($lvl_test_mc->proceed_step == 1) {
 
                     $lvl_test_mc_result = $lvl_test->lvl_test_mc_result;
-                    $lvl_test_mc_result += $this->scoreTheTest(6, 10, 2, $lvl_test_mc);
+                    $step_result = $this->scoreTheTest(6, 10, 2, $lvl_test_mc);
+                    $lvl_test_mc_result += $step_result;
                     $lvl_test->lvl_test_mc_result = $lvl_test_mc_result;
 
                     \DB::transaction(function() use($lvl_test, $lvl_test_mc) {
                         $lvl_test_mc->save();
                         $lvl_test->save();
                     });
+
+                    if($step_result <= 4) {
+                        $lvl_test_mc->status = 'c';
+                        $lvl_test->status = 'c';
+
+                        \DB::transaction(function() use($lvl_test, $lvl_test_mc) {
+                            $lvl_test_mc->save();
+                            $lvl_test->save();
+                        });
+                        return view('student.testsManagement.completeTest');
+                    }
 
                     return view('student.testsManagement.popups.partials.takeTestIntermediate')
                         ->with('lvl_test', $lvl_test)
@@ -148,13 +173,25 @@ class TestsManagementController extends Controller {
                 if($lvl_test_mc->proceed_step == 2) {
 
                     $lvl_test_mc_result = $lvl_test->lvl_test_mc_result;
-                    $lvl_test_mc_result += $this->scoreTheTest(11, 15, 3, $lvl_test_mc);
+                    $step_result = $this->scoreTheTest(11, 15, 3, $lvl_test_mc);
+                    $lvl_test_mc_result += $step_result;
                     $lvl_test->lvl_test_mc_result = $lvl_test_mc_result;
 
                     \DB::transaction(function() use($lvl_test, $lvl_test_mc) {
                         $lvl_test_mc->save();
                         $lvl_test->save();
                     });
+
+                    if($step_result <= 6) {
+                        $lvl_test_mc->status = 'c';
+                        $lvl_test->status = 'c';
+
+                        \DB::transaction(function() use($lvl_test, $lvl_test_mc) {
+                            $lvl_test_mc->save();
+                            $lvl_test->save();
+                        });
+                        return view('student.testsManagement.completeTest');
+                    }
 
                     return view('student.testsManagement.popups.partials.takeTestExpert')
                         ->with('lvl_test', $lvl_test)

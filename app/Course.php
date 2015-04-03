@@ -61,4 +61,13 @@ class Course extends Model {
         }
     }
 
+    public function lvlTests() {
+        return $this->hasMany('App\LvlTest', 'student_id');
+    }
+
+    public function getLvlTestWhereCourseId($course_id) {
+        return $this->lvlTests()
+            ->where('course_id', $course_id)->get();
+    }
+
 }

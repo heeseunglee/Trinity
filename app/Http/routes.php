@@ -14,6 +14,7 @@
 use App\Course;
 use App\CourseMainCurriculum;
 use App\LvlTest;
+use App\NewCourseRequest;
 use App\PreferredAreaGroup;
 use App\Student;
 
@@ -71,7 +72,47 @@ Route::group(['prefix' => 'Consultant', 'middleware' => ['auth', 'firstLogin', '
             return redirect('Consultant/coursesManagement/index');
         });
 
-        Route::get('index', 'Consultant\CoursesManagementController@index');
+        Route::get('index', function() {
+            return view('consultant.coursesManagement.index');
+        });
+
+        Route::get('register', function() {
+            return view('consultant.coursesManagement.register');
+        });
+
+        Route::post('register', 'Consultant\CoursesManagementController@create');
+
+        Route::get('ajax/hrSelect/{company_id}', function($company_id) {
+
+            if(\Request::ajax()) {
+                return view('consultant.coursesManagement.ajax.hrSelect')
+                    ->with('hrs', \App\Company::find($company_id)->hrs);
+            }
+
+        });
+
+        Route::get('popups/curriculum', function() {
+            return view('consultant.coursesManagement.popups.curriculum')
+                ->with('course_main_curriculums', CourseMainCurriculum::all());
+        });
+
+        Route::get('ajax/subCurriculum/{course_main_curriculum_id}', function($course_main_curriculum_id) {
+
+            if(\Request::ajax()) {
+                return view('consultant.coursesManagement.ajax.subCurriculum')
+                    ->with('course_main_curriculum', CourseMainCurriculum::find($course_main_curriculum_id));
+            }
+
+        });
+
+        Route::get('ajax/studentsListMultiselect/{company_id}', function($company_id) {
+
+            if(\Request::ajax()) {
+                return view('consultant.coursesManagement.ajax.studentsListMultiselect')
+                    ->with('company', \App\Company::find($company_id));
+            }
+
+        });
 
         Route::group(['prefix' => 'requestedCourses'], function() {
 
@@ -83,7 +124,15 @@ Route::group(['prefix' => 'Consultant', 'middleware' => ['auth', 'firstLogin', '
 
             Route::get('approve/{new_course_request_id}', 'Consultant\CoursesManagementRequestedCoursesController@approve');
 
-            Route::get('modify/{new_course_request_id}', 'Consultant\CoursesManagementRequestedCoursesController@modify');
+            Route::get('show/{new_course_request_id}', function($new_course_request_id) {
+                return view('consultant.coursesManagement.requestedCourses.show')
+                    ->with('new_course_request', NewCourseRequest::find($new_course_request_id));
+            });
+
+            Route::get('modify/{new_course_request_id}', function($new_course_request_id) {
+                return view('consultant.coursesManagement.requestedCourses.modify')
+                    ->with('new_course_request', NewCourseRequest::find($new_course_request_id));
+            });
 
             Route::post('modify/{new_course_request_id}', 'Consultant\CoursesManagementRequestedCoursesController@update');
 
@@ -118,6 +167,8 @@ Route::group(['prefix' => 'Consultant', 'middleware' => ['auth', 'firstLogin', '
                     ->with('pre_course', Course::find($pre_course_id));
             });
 
+            Route::post('show/{pre_course_id}', 'Consultant\CoursesManagementPreCoursesController@complete');
+
             Route::get('signUpStudents/{pre_course_id}', function($pre_course_id) {
                 return view('consultant.coursesManagement.preCourses.signUpStudents')
                     ->with('pre_course', Course::find($pre_course_id));
@@ -135,6 +186,8 @@ Route::group(['prefix' => 'Consultant', 'middleware' => ['auth', 'firstLogin', '
             Route::get('register', function() {
                 return view('consultant.coursesManagement.preCourses.register');
             });
+
+            Route::post('register', 'Consultant\CoursesManagementPreCoursesController@create');
 
             Route::get('popups/curriculum', function() {
                 return view('consultant.coursesManagement.preCourses.popups.curriculum')

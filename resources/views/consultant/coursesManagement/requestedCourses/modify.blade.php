@@ -220,7 +220,7 @@
                                     <div class="col-lg-3 col-md-2 col-sm-3">
                                         <label for="instructor_gender" class="control-label">희망 강사 성별</label>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm 3">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
                                         <label class="radio-inline">
                                             <input type="radio"
                                                    name="instructor_gender"
@@ -231,7 +231,7 @@
                                                 @endif> 남성
                                         </label>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm 3">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
                                         <label class="radio-inline">
                                             <input type="radio"
                                                    name="instructor_gender"

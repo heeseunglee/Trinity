@@ -67,4 +67,8 @@ class Instructor extends Model {
     public function careerDetails() {
         return $this->hasMany('App\CareerDetail', 'instructor_id');
     }
+
+    public function courses() {
+        return $this->hasMany('App\Course', 'instructor_id');
+    }
 }

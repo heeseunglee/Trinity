@@ -32,30 +32,30 @@ class CoursesManagementRequestedCoursesController extends Controller {
             $new_course_request->status = 'ca';
             $new_course_request->approved_by = $current_user->userable_id;
 
-            $new_course = new Course();
+            $new_pre_course = new Course();
 
-            $new_course->is_pre_course = true;
-            $new_course->is_lvl_test = $new_course_request->is_lvl_test;
-            $new_course->name = $new_course_request->company->name.' '.$new_course_request->courseType->name.' '.'사전과정';
-            $new_course->hr_id = $new_course_request->hr_id;
-            $new_course->company_id = $new_course_request->company_id;
-            $new_course->course_type_id = $new_course_request->course_type_id;
+            $new_pre_course->is_pre_course = true;
+            $new_pre_course->is_lvl_test = $new_course_request->is_lvl_test;
+            $new_pre_course->name = $new_course_request->company->name.' '.$new_course_request->courseType->name.' '.'사전과정';
+            $new_pre_course->hr_id = $new_course_request->hr_id;
+            $new_pre_course->company_id = $new_course_request->company_id;
+            $new_pre_course->course_type_id = $new_course_request->course_type_id;
 
             $start_datetime = new \DateTime('now');
             $start_datetime->setTime(6, 0);
-            $new_course->start_datetime = $start_datetime;
+            $new_pre_course->start_datetime = $start_datetime;
 
             $end_datetime = new \DateTime('+7 days');
             $end_datetime->setTime(21, 0);
-            $new_course->end_datetime = $end_datetime;
+            $new_pre_course->end_datetime = $end_datetime;
 
-            $new_course->running_days = $new_course_request->running_days;
-            $new_course->location = $new_course_request->location;
-            $new_course->status = 'p';
+            $new_pre_course->running_days = $new_course_request->running_days;
+            $new_pre_course->location = $new_course_request->location;
+            $new_pre_course->status = 'p';
 
-            $new_course->save();
+            $new_pre_course->save();
 
-            $new_course_request->pre_course_id = $new_course->id;
+            $new_course_request->pre_course_id = $new_pre_course->id;
             $new_course_request->save();
 
             $curriculum_id_array = array();
@@ -63,18 +63,13 @@ class CoursesManagementRequestedCoursesController extends Controller {
                 $curriculum_id_array[] = $curriculum->id;
             }
 
-            $new_course->curriculums()->sync($curriculum_id_array);
+            $new_pre_course->curriculums()->sync($curriculum_id_array);
 
         });
 
         \Flash::success('클래스 요청 승인 완료');
         return redirect('Consultant/coursesManagement/index');
 
-    }
-
-    public function modify($new_course_request_id) {
-        return view('consultant.coursesManagement.requestedCourses.modify')
-            ->with('new_course_request', NewCourseRequest::find($new_course_request_id));
     }
 
     public function update($new_course_request_id, UpdateNewCourseRequest $request) {

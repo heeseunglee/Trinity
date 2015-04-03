@@ -93,7 +93,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ URL::to('Consultant/coursesManagement/requestedCourses/approve/'.$new_course_request->id) }}">
+                                            <a href="{{ URL::to('Consultant/coursesManagement/requestedCourses/show/'.$new_course_request->id) }}">
                                                 @foreach($new_course_request->curriculums()->get() as $curriculum)
                                                     {{ $curriculum->name }} <br/>
                                                 @endforeach
@@ -116,29 +116,33 @@
                                         </td>
 
                                         <td>
-                                            <a href="{{ URL::to('Consultant/coursesManagement/requestedCourses/approve/'.$new_course_request->id) }}"
-                                                    class="btn btn-xs btn-success btn-equal"
-                                                    data-toggle="tooltip"
-                                                    data-placement="top"
-                                                    data-original-title="승인">
-                                                <i class="fa fa-check"></i>
-                                            </a>
+                                            @if($new_course_request->status == 'pa')
+                                                <a href="{{ URL::to('Consultant/coursesManagement/requestedCourses/approve/'.$new_course_request->id) }}"
+                                                   class="btn btn-xs btn-success btn-equal"
+                                                   data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   data-original-title="승인">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
 
-                                            <a href="{{ URL::to('Consultant/coursesManagement/requestedCourses/modify/'.$new_course_request->id) }}"
-                                                    class="btn btn-xs btn-inverse btn-equal"
-                                                    data-toggle="tooltip"
-                                                    data-placement="top"
-                                                    data-original-title="수정">
-                                                <i class="fa fa-pencil"></i>
-                                            </a>
+                                                <a href="{{ URL::to('Consultant/coursesManagement/requestedCourses/modify/'.$new_course_request->id) }}"
+                                                   class="btn btn-xs btn-inverse btn-equal"
+                                                   data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   data-original-title="수정">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
 
-                                            <a href="{{ URL::to('Consultant/coursesManagement/requestedCourses/reject/'.$new_course_request->id) }}"
-                                                    class="btn btn-xs btn-danger btn-equal"
-                                                    data-toggle="tooltip"
-                                                    data-placement="top"
-                                                    data-original-title="반려">
-                                                <i class="fa fa-trash-o"></i>
-                                            </a>
+                                                <a href="{{ URL::to('Consultant/coursesManagement/requestedCourses/reject/'.$new_course_request->id) }}"
+                                                   class="btn btn-xs btn-danger btn-equal"
+                                                   data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   data-original-title="반려">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </a>
+                                            @else
+                                                -
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

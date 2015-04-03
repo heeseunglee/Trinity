@@ -158,7 +158,7 @@
                                                 {{ $test->course->name }} 레벨 테스트
                                             </td>
                                             <td>
-                                                TODO
+                                                {{ $test->start_date }} ~ {{ $test->end_date }}
                                             </td>
                                             <td>
                                                 NA

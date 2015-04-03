@@ -42,6 +42,7 @@
                                 <p>레벨 테스트를 희망하지 않으시면 아래의 <strong class="text-support2">레벨테스트 포기</strong> 버튼을 눌러주십시오. 자동으로 입문으로 배정됩니다.</p>
                                 <p>레벨 테스트 도중 급하신 일이 있다면 일시정지 버튼을 눌러주십시오.</p>
                                 <p>레벨 테스트의 시험 시간이 만료되면 자동으로 완료처리 됩니다.</p>
+                                <p><strong class="text-danger">각 단계별 레벨 테스트 결과가 일정 점수에 도달하지 않을 경우 자동으로 완료 처리됩니다. (입문 : 2점, 초급 : 4점, 중급 : 6점)</strong></p>
                                 {!! Form::open() !!}
                                     <input name="encrypted_test_id" type="hidden" value="{{ $encrypted_test_id }}"/>
 

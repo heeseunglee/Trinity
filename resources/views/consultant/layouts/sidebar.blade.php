@@ -23,6 +23,9 @@
                 <li><a href="{{ URL::to('Consultant/coursesManagement/index') }}"
                     @if(strpos($current_url, 'coursesManagement/index')) class = "active" @endif>전체 보기</a></li>
 
+                <li><a href="{{ URL::to('Consultant/coursesManagement/register') }}"
+                    @if(strpos($current_url, 'coursesManagement/register')) class = "active" @endif>클래스 등록</a></li>
+
                 <li @if(strpos($current_url, 'preCourses')) class = "active expanded" @endif>
                     <a href="javascript:void(0);">
                         <span class="expand-sign">+</span> <span class="title">Pre 클래스 관리</span>
