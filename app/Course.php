@@ -26,7 +26,8 @@ class Course extends Model {
         'end_datetime',
         'location',
         'running_days',
-        'status'];
+        'status',
+        'instructor_id'];
 
     public function curriculums() {
         return $this->belongsToMany('App\CourseSubCurriculum',
@@ -52,7 +53,7 @@ class Course extends Model {
                                     'courses_students',
                                     'course_id',
                                     'student_id')
-            ->withPivot('lvl_test_id');
+            ->withPivot('lvl_test_id', 'mid_lvl_test_id', 'final_lvl_test_id');
     }
 
     public function newCourseRequest() {
@@ -68,6 +69,10 @@ class Course extends Model {
     public function getLvlTestWhereCourseId($course_id) {
         return $this->lvlTests()
             ->where('course_id', $course_id)->get();
+    }
+
+    public function instructor() {
+        return $this->belongsTo('App\Instructor', 'instructor_id');
     }
 
 }

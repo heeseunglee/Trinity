@@ -22,4 +22,8 @@ class Consultant extends Model {
         return $this->morphOne('App\User', 'userable');
     }
 
+    public function hrs() {
+        return $this->hasMany('App\Hr', 'consultant_id');
+    }
+
 }

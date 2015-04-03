@@ -157,12 +157,12 @@
                             <table class="table table-dynamic">
                                 <thead>
                                     <tr>
-                                        <th>이름</th>
-                                        <th>직급</th>
-                                        <th>부서</th>
                                         <th>고객사</th>
+                                        <th>이름</th>
                                         <th>이메일</th>
                                         <th>연락처</th>
+                                        <th>직급</th>
+                                        <th>부서</th>
                                         <th>진행중 과정</th>
                                         <th class="text-right" style="width:90px">보기</th>
                                     </tr>
@@ -170,13 +170,17 @@
                                 <tbody>
                                     @foreach($students as $student)
                                         <tr>
-                                            <td>{{ $student->user->name_kor }}</td>
-                                            <td>{{ $student->position }}</td>
-                                            <td>{{ $student->deputy }}</td>
                                             <td>{{ $student->company->name }}</td>
+                                            <td>{{ $student->user->name_kor }}</td>
                                             <td><a href="mailto:{{ $student->user->email }}">{{ $student->user->email }}</a></td>
                                             <td>{{ $student->user->phone_number }}</td>
-                                            <td>TODO</td>
+                                            <td>{{ $student->position }}</td>
+                                            <td>{{ $student->deputy }}</td>
+                                            <td>
+                                                @foreach($student->courses as $course)
+                                                    <div>{{ $course->name }}</div>
+                                                @endforeach
+                                            </td>
                                             <td class="text-right" style="width:90px">
                                                 <button type="button" class="btn btn-xs btn-default btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Edit row"><i class="fa fa-pencil"></i></button>
                                                 <button type="button" class="btn btn-xs btn-default btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Copy row"><i class="fa fa-copy"></i></button>
@@ -209,25 +213,49 @@
                                 <thead>
                                 <tr>
                                     <th>이름</th>
-                                    <th>직급</th>
-                                    <th>부서</th>
-                                    <th>고객사</th>
                                     <th>이메일</th>
-                                    <th>연락처</th>
-                                    <th>진행중 과정</th>
+                                    <th>경력</th>
+                                    <th>등급</th>
+                                    <th>특화 분야</th>
+                                    <th>계약 기간</th>
+                                    <th>선호 지역</th>
+                                    <th>클래스 수</th>
+                                    <th>학생 수</th>
                                     <th class="text-right" style="width:90px">보기</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($students as $student)
+                                @foreach($instructors as $instructor)
                                     <tr>
-                                        <td>{{ $student->user->name_kor }}</td>
-                                        <td>{{ $student->position }}</td>
-                                        <td>{{ $student->deputy }}</td>
-                                        <td>{{ $student->company->name }}</td>
-                                        <td><a href="mailto:{{ $student->user->email }}">{{ $student->user->email }}</a></td>
-                                        <td>{{ $student->user->phone_number }}</td>
+                                        <td>{{ $instructor->user->name_kor }}</td>
+                                        <td><a href="mailto:{{ $instructor->user->email }}">{{ $instructor->user->email }}</a></td>
+                                        <td>{{ $instructor->career_years }}년</td>
+                                        <td>{{ $instructor->rating }}</td>
+                                        <?php
+                                            $curriculums_array = array();
+                                            $curriculums = $instructor->curriculums;
+                                            foreach($curriculums as $curriculum) {
+                                                $curriculums_array[] = $curriculum->name;
+                                            }
+                                        ?>
+                                        <td>{{ implode(', ', $curriculums_array) }}</td>
                                         <td>TODO</td>
+                                        <?php
+                                            $preferred_area_array = array();
+                                            $preferred_areas = $instructor->preferredAreas;
+                                            foreach($preferred_areas as $preferred_area) {
+                                                $preferred_area_array[] = $preferred_area->name;
+                                            }
+                                        ?>
+                                        <td>{{ implode(', ', $preferred_area_array) }}</td>
+                                        <td>{{ $instructor->courses()->count() }}</td>
+                                        <?php
+                                            $temp = 0;
+                                            foreach($instructor->courses as $course) {
+                                                $temp += $course->students()->count();
+                                            }
+                                        ?>
+                                        <td>{{ $temp }}</td>
                                         <td class="text-right" style="width:90px">
                                             <button type="button" class="btn btn-xs btn-default btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Edit row"><i class="fa fa-pencil"></i></button>
                                             <button type="button" class="btn btn-xs btn-default btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Copy row"><i class="fa fa-copy"></i></button>
@@ -259,77 +287,22 @@
                             <table class="table table-dynamic">
                                 <thead>
                                 <tr>
-                                    <th>이름</th>
-                                    <th>직급</th>
-                                    <th>부서</th>
                                     <th>고객사</th>
+                                    <th>이름</th>
                                     <th>이메일</th>
                                     <th>연락처</th>
-                                    <th>진행중 과정</th>
+                                    <th>클래스 수</th>
                                     <th class="text-right" style="width:90px">보기</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($students as $student)
+                                @foreach($hrs as $hr)
                                     <tr>
-                                        <td>{{ $student->user->name_kor }}</td>
-                                        <td>{{ $student->position }}</td>
-                                        <td>{{ $student->deputy }}</td>
-                                        <td>{{ $student->company->name }}</td>
-                                        <td><a href="mailto:{{ $student->user->email }}">{{ $student->user->email }}</a></td>
-                                        <td>{{ $student->user->phone_number }}</td>
-                                        <td>TODO</td>
-                                        <td class="text-right" style="width:90px">
-                                            <button type="button" class="btn btn-xs btn-default btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Edit row"><i class="fa fa-pencil"></i></button>
-                                            <button type="button" class="btn btn-xs btn-default btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Copy row"><i class="fa fa-copy"></i></button>
-                                            <button type="button" class="btn btn-xs btn-default btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Delete row"><i class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div><!--end .col-lg-3 -->
-                <!-- END HEADER XS BOX -->
-            </div>
-            <div class="row">
-                <!-- START HEADER XS BOX -->
-                <div class="col-lg-12">
-                    <div class="box">
-                        <div class="box-head box-head-xs style-primary">
-                            <header><h5 class="text-light"> <strong>컨설턴트</strong> 목록</h5></header>
-                            <div class="tools">
-                                <div class="btn-group btn-group-transparent">
-                                    <a class="btn btn-equal btn-sm btn-collapse"><i class="fa fa-angle-down"></i></a>
-                                    <a class="btn btn-equal btn-sm btn-close"><i class="fa fa-times"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box-body">
-                            <table class="table table-dynamic">
-                                <thead>
-                                <tr>
-                                    <th>이름</th>
-                                    <th>직급</th>
-                                    <th>부서</th>
-                                    <th>고객사</th>
-                                    <th>이메일</th>
-                                    <th>연락처</th>
-                                    <th>진행중 과정</th>
-                                    <th class="text-right" style="width:90px">보기</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($students as $student)
-                                    <tr>
-                                        <td>{{ $student->user->name_kor }}</td>
-                                        <td>{{ $student->position }}</td>
-                                        <td>{{ $student->deputy }}</td>
-                                        <td>{{ $student->company->name }}</td>
-                                        <td><a href="mailto:{{ $student->user->email }}">{{ $student->user->email }}</a></td>
-                                        <td>{{ $student->user->phone_number }}</td>
-                                        <td>TODO</td>
+                                        <td>{{ $hr->company->name }}</td>
+                                        <td>{{ $hr->user->name_kor }}</td>
+                                        <td><a href="mailto:{{ $hr->user->email }}">{{ $hr->user->email }}</a></td>
+                                        <td>{{ $hr->user->phone_number }}</td>
+                                        <td>{{ $hr->courses()->count() }}</td>
                                         <td class="text-right" style="width:90px">
                                             <button type="button" class="btn btn-xs btn-default btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Edit row"><i class="fa fa-pencil"></i></button>
                                             <button type="button" class="btn btn-xs btn-default btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Copy row"><i class="fa fa-copy"></i></button>

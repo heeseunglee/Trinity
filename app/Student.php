@@ -33,7 +33,7 @@ class Student extends Model {
                                     'courses_students',
                                     'student_id',
                                     'course_id')
-            ->withPivot('lvl_test_id');
+            ->withPivot('lvl_test_id', 'mid_lvl_test_id', 'final_lvl_test_id');
     }
 
     public function lvlTests() {

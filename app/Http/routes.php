@@ -11,8 +11,11 @@
 |
 */
 
+use App\Consultant;
 use App\Course;
 use App\CourseMainCurriculum;
+use App\Hr;
+use App\Instructor;
 use App\LvlTest;
 use App\NewCourseRequest;
 use App\PreferredAreaGroup;
@@ -73,7 +76,8 @@ Route::group(['prefix' => 'Consultant', 'middleware' => ['auth', 'firstLogin', '
         });
 
         Route::get('index', function() {
-            return view('consultant.coursesManagement.index');
+            return view('consultant.coursesManagement.index')
+                ->with('courses', Course::all());
         });
 
         Route::get('register', function() {
@@ -221,7 +225,13 @@ Route::group(['prefix' => 'Consultant', 'middleware' => ['auth', 'firstLogin', '
             return redirect('Consultant/usersManagement/index');
         });
 
-        Route::get('index', 'Consultant\UsersManagementController@index');
+        Route::get('index', function() {
+            return view('consultant.usersManagement.index')
+                ->with('students', Student::all())
+                ->with('instructors', Instructor::all())
+                ->with('hrs', Hr::all())
+                ->with('consultants', Consultant::all());
+        });
 
         Route::group(['prefix' => 'students'], function() {
 

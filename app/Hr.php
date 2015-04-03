@@ -31,4 +31,7 @@ class Hr extends Model {
         return $this->belongsTo('App\Company', 'company_id');
     }
 
+    public function courses() {
+        return $this->hasMany('App\Course', 'hr_id');
+    }
 }

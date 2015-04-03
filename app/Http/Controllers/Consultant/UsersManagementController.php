@@ -14,12 +14,6 @@ use Illuminate\Http\Request;
 
 class UsersManagementController extends Controller {
 
-	public function index() {
-        return view('consultant.usersManagement.index')
-            ->with('students', Student::all())
-            ->with('instructors', Instructor::all())
-            ->with('hrs', Hr::all())
-            ->with('consultants', Consultant::all());
-    }
+
 
 }
