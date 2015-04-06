@@ -11,7 +11,7 @@ class ConsultantsTableSeeder extends Seeder {
 			'is_admin' => true
 		])->user()->create([
 			'email' => 'final.lee@themandarin.co.kr',
-			'password' => \Hash::make('Elqnfhd!324'),
+			'password' => \Hash::make('123123'),
 			'name_kor' => '이희승',
 			'name_eng' => 'Heeseung Lee',
 			'private_email' => '1541.hsl@gmail.com',
@@ -62,5 +62,16 @@ class ConsultantsTableSeeder extends Seeder {
 			'phone_number' => preg_replace('/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/', '$1-$2-$3', '01063627415'),
             'is_first_login' => false
 		]);;
+
+        Consultant::create([
+            'is_admin' => true
+        ])->user()->create([
+            'email' => 'sy.lee@themandarin.co.kr',
+            'password' => \Hash::make('123123'),
+            'name_kor' => '이상영',
+            'name_eng' => 'Sangyoung Lee',
+            'phone_number' => preg_replace('/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/', '$1-$2-$3', '01025513269'),
+            'is_first_login' => false
+        ]);;
 	}
 }

@@ -150,7 +150,7 @@
                                                 {{ $course->location }}
                                             </td>
                                             <td>
-                                                {{ $course->students()->count() }}
+                                                {{ $counnrse->students()->count() }}
                                             </td>
                                             <td>
                                                 TODO

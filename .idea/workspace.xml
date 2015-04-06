@@ -791,6 +791,14 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/resources/views/consultant/coursesManagement/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2730">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/consultant/coursesManagement/preCourses/show.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.82214767" vertical-offset="2700" max-vertical-offset="3645">
@@ -1089,6 +1097,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.45302013" vertical-offset="0" max-vertical-offset="894">
           <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+<<<<<<< HEAD
+=======
+          <folding />
+>>>>>>> 0eb4d39b16c1dc444b4c88f7a789beb97c660bcd
         </state>
       </provider>
     </entry>
@@ -1117,7 +1129,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3691275" vertical-offset="600" max-vertical-offset="6540">
           <caret line="79" column="47" selection-start-line="79" selection-start-column="47" selection-end-line="79" selection-end-column="47" />
+<<<<<<< HEAD
           <folding />
+=======
+>>>>>>> 0eb4d39b16c1dc444b4c88f7a789beb97c660bcd
         </state>
       </provider>
     </entry>
@@ -1128,6 +1143,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2015-04-03.log">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.47257876" vertical-offset="9030" max-vertical-offset="25155">
@@ -1142,13 +1158,25 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5751634" vertical-offset="1947" max-vertical-offset="2865">
           <caret line="165" column="89" selection-start-line="165" selection-start-column="89" selection-end-line="165" selection-end-column="89" />
+=======
+    <entry file="file://$PROJECT_DIR$/resources/views/consultant/coursesManagement/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.666667" vertical-offset="2048" max-vertical-offset="2730">
+          <caret line="152" column="57" selection-start-line="152" selection-start-column="57" selection-end-line="152" selection-end-column="57" />
+          <folding />
+>>>>>>> 0eb4d39b16c1dc444b4c88f7a789beb97c660bcd
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/consultant/coursesManagement/index.blade.php">
+    <entry file="file://$PROJECT_DIR$/database/seeds/ConsultantsTableSeeder.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="1.2080537" vertical-offset="1365" max-vertical-offset="2730">
           <caret line="163" column="89" selection-start-line="163" selection-start-column="89" selection-end-line="163" selection-end-column="89" />
+=======
+        <state vertical-scroll-proportion="0.3739003" vertical-offset="0" max-vertical-offset="1215">
+          <caret line="18" column="29" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+>>>>>>> 0eb4d39b16c1dc444b4c88f7a789beb97c660bcd
           <folding />
         </state>
       </provider>
