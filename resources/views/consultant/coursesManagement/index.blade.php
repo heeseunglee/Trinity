@@ -156,7 +156,7 @@
                                                 TODO
                                             </td>
                                             <td>
-                                                {{ $course->instructor->user->name_kor }}
+                                                TODO
                                             </td>
                                             <td class="text-right" style="width:90px">
                                                 <button type="button" class="btn btn-xs btn-default btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Edit row"><i class="fa fa-pencil"></i></button>
